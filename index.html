@@ -1,195 +1,557 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ÉDITION PRIVÉE — Winter Icons 2025</title>
-  <meta name="description" content="ÉDITION PRIVÉE · Winter Icons 2025 · Piezas icónicas seleccionadas con entrega premium en CDMX." />
-  <meta name="theme-color" content="#FBF1EB" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Readdy AI — Smart Luxury</title>
+<meta name="description" content="Tecnología que se viste. Estilo que se siente. Smart Luxury." />
+<meta name="theme-color" content="#0f0f0f" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0e0e0f;
+    --bg-soft:#121214;
+    --card:#161618;
+    --muted:#9aa3ad;
+    --text:#f5f6f7;
+    --brand:#d6ab47;
+    --brand-2:#c4972c;
+    --max:1200px;
+    --radius:18px;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --border:1px solid rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    color:var(--text); background:var(--bg);
+    line-height:1.55;
+  }
+  a{color:inherit}
+  .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+    padding:.9rem 1.2rem; border-radius:9999px; font-weight:600;
+    border:1px solid transparent; cursor:pointer; text-decoration:none;
+    transition:.2s ease;
+  }
+  .btn-primary{background:var(--brand); color:#111; border-color:var(--brand)}
+  .btn-primary:hover{background:var(--brand-2); border-color:var(--brand-2)}
+  .btn-ghost{background:transparent; color:var(--text); border-color:rgba(255,255,255,.25)}
+  .btn-ghost:hover{border-color:rgba(255,255,255,.45); transform:translateY(-1px)}
 
-  <style>
-    :root{
-      --primary:#E65103;
-      --primary-2:#BF4408;
-      --surface:#ffffff;
-      --surface-2:#FBF1EB;
-      --text:#191818;
-      --text-2:#4a4a4a;
-      --accent:#9ec9e8;
-      --radius:16px;
-      --shadow:0 10px 30px rgba(0,0,0,.12);
-      --max:1100px;
-    }
+  /* NAV */
+  .nav{
+    position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
+    background:linear-gradient(180deg, rgba(15,15,16,.85), rgba(15,15,16,.55));
+    border-bottom:var(--border);
+  }
+  .nav__inner{
+    display:flex; align-items:center; justify-content:space-between; padding:14px 0;
+  }
+  .brand{
+    font-family:"Playfair Display",serif; letter-spacing:.04em; font-weight:700;
+    font-size:22px;
+  }
+  .menu{display:flex; gap:26px; align-items:center}
+  .menu a{color:#d5d7da; text-decoration:none; font-weight:500}
+  .menu a:hover{color:#fff}
+  .burger{display:none; width:42px; height:42px; border-radius:12px; border:var(--border); background:#151516; color:#fff}
 
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--surface);color:var(--text)}
-    body{font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; line-height:1.5}
+  /* HERO */
+  .hero{
+    position:relative; overflow:hidden; border-bottom:var(--border);
+    background:
+      linear-gradient(0deg, rgba(14,14,15,.55), rgba(14,14,15,.55)),
+      url('https://images.unsplash.com/photo-1618355776464-8666794d1b49?q=80&w=2000&auto=format&fit=crop');
+    background-size:cover; background-position:center;
+  }
+  .hero__inner{min-height:72vh; display:grid; align-items:center}
+  .h1{
+    font-family:"Playfair Display",serif;
+    font-size: clamp(36px, 6vw, 72px); line-height:1.05; margin:0 0 12px;
+    text-shadow:0 4px 22px rgba(0,0,0,.45);
+  }
+  .sub{color:#cfd3d7; font-size:clamp(16px,2vw,22px); margin:0 0 26px}
 
-    /* NAV */
-    .nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.75);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06)}
-    .nav__inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px}
-    .brand{font-family:"Cinzel",serif;font-weight:700;letter-spacing:.06em;text-decoration:none;color:var(--text)}
-    .menu{display:flex;gap:20px;align-items:center}
-    .menu a{color:var(--text);text-decoration:none}
-    .cta{display:inline-flex;gap:8px;align-items:center;padding:10px 16px;border-radius:9999px;background:var(--primary);color:#fff;text-decoration:none;border:1px solid var(--primary); box-shadow:var(--shadow)}
-    .cta:hover{background:var(--primary-2);border-color:var(--primary-2)}
-    .burger{display:none; width:40px;height:40px;border:1px solid rgba(0,0,0,.1);border-radius:9999px;background:#fff}
+  /* SECTION TITLES */
+  .section{padding:72px 0; background:var(--bg)}
+  .section.alt{background:var(--bg-soft)}
+  .title{
+    font-family:"Playfair Display",serif; font-size:clamp(28px,4vw,48px); margin:0 0 8px;
+  }
+  .under{width:90px; height:4px; background:var(--brand); border-radius:6px; margin:14px 0 26px}
 
-    /* HERO */
-    .hero{background:var(--surface-2)}
-    .hero__inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;padding:56px 20px}
-    .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:.9rem;margin:0 0 6px}
-    .h1{font-family:"Cinzel",serif;font-size:clamp(28px,4.2vw,48px);line-height:1.1;margin:0 0 10px}
-    .sub{color:var(--text-2);font-size:1.125rem;margin:0 0 24px}
-    .hero__img{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#fff}
-    .hero__img img{display:block;width:100%;height:100%;object-fit:cover}
+  /* PRODUCT GRID */
+  .grid{display:grid; gap:24px}
+  @media (min-width:900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
+  @media (min-width:640px) and (max-width:899.9px){ .grid.cols-3{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:639.9px){ .grid.cols-3{grid-template-columns:1fr} }
 
-    /* GRID */
-    .wrap{max-width:var(--max);margin:0 auto;padding:56px 20px}
-    .h2{font-family:"Cinzel",serif;font-size:clamp(22px,3vw,32px);margin:0 0 18px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .card{border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.06)}
-    .card img{width:100%;height:230px;object-fit:cover;display:block}
-    .card__body{padding:14px 14px 16px}
-    .card__title{font-weight:600;margin:0 0 6px}
-    .price{color:var(--text-2);margin:0 0 12px}
-    .wacta{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:1px solid var(--primary);color:#fff;background:var(--primary);text-decoration:none}
-    .wacta:hover{background:var(--primary-2);border-color:var(--primary-2)}
+  .card{
+    background:var(--card); border:var(--border); border-radius:16px; overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .card__media{position:relative}
+  .card__media img{display:block; width:100%; height:300px; object-fit:cover}
+  .badge{
+    position:absolute; top:14px; left:14px; background:#0f1113; color:#ffd88a;
+    border:1px solid rgba(255,255,255,.18); padding:.35rem .6rem; border-radius:10px; font-size:.82rem; font-weight:700;
+  }
+  .card__body{padding:16px 16px 18px}
+  .card__title{margin:0 0 6px; font-weight:700; font-size:1.15rem}
+  .muted{color:var(--muted); margin:0 0 14px}
+  .price{font-weight:700; margin-top:4px}
 
-    /* CTA WIDE */
-    .cta-wide{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
-    .cta-wide p{margin:0;color:var(--text-2)}
+  /* LIMITED */
+  .counter{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:22px 0 32px;
+    background:#0f1113; border:var(--border); border-radius:14px; padding:16px 18px;
+  }
+  .counter .box{ text-align:center }
+  .counter .num{ font-size:1.8rem; font-weight:800 }
+  .counter .lbl{ color:var(--muted); font-size:.85rem }
 
-    /* FOOTER */
-    .footer{border-top:1px solid rgba(0,0,0,.08);background:#fff}
-    .footer__inner{max-width:var(--max);margin:0 auto;padding:24px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;color:var(--text-2)}
+  /* PURCHASE */
+  .features{display:grid; gap:18px}
+  .feature{
+    display:flex; gap:14px; align-items:center; background:#111214;
+    border:var(--border); border-radius:16px; padding:16px 18px;
+  }
+  .dot{width:38px; height:38px; border-radius:10px; display:grid; place-items:center}
+  .dot.wapp{background:#25D36622; color:#25D366; border:1px solid #25D36655}
+  .dot.pay{background:#f6c34322; color:#f6c343; border:1px solid #f6c34355}
+  .dot.ship{background:#8dd1ff22; color:#8dd1ff; border:1px solid #8dd1ff55}
 
-    /* RESPONSIVE */
-    @media (max-width:900px){
-      .hero__inner{grid-template-columns:1fr;gap:20px}
-      .grid{grid-template-columns:1fr 1fr}
-      .cta-wide{grid-template-columns:1fr}
-    }
-    @media (max-width:640px){
-      .menu{display:none}
-      .burger{display:inline-grid;place-items:center}
-      .grid{grid-template-columns:1fr}
-    }
-  </style>
+  .form{
+    background:#111214; border:var(--border); border-radius:16px; padding:18px; box-shadow:var(--shadow)
+  }
+  .form h3{margin:0 0 12px}
+  .input, .select, .textarea{
+    width:100%; background:#0f1012; color:#fff; border:1px solid rgba(255,255,255,.12);
+    border-radius:12px; padding:12px 14px; outline:none; transition:.2s ease;
+    font:inherit;
+  }
+  .input:focus,.select:focus,.textarea:focus{border-color:var(--brand)}
+  .textarea{min-height:120px; resize:vertical}
+
+  .two{display:grid; gap:20px}
+  @media (min-width:980px){ .two{grid-template-columns:1fr 1fr} }
+
+  /* TESTIMONIALS */
+  .t-grid{display:grid; gap:20px}
+  @media (min-width:980px){ .t-grid{grid-template-columns:repeat(3,1fr)} }
+  .t{
+    background:#121316; border:var(--border); border-radius:16px; padding:18px;
+  }
+  .t .row{display:flex; gap:12px; align-items:center; margin-bottom:10px}
+  .avatar{width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(255,255,255,.18)}
+  .stars{color:#ffce5a; letter-spacing:1px}
+
+  /* FOOTER + FLOAT */
+  .footer{border-top:var(--border); background:#0d0d0e}
+  .footer__inner{padding:22px 0; color:#b9c0c7; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  .float{
+    position:fixed; right:18px; bottom:18px; z-index:60;
+    background:#0f1113; border:var(--border); border-radius:9999px; box-shadow:var(--shadow);
+  }
+  .float a{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; color:#fff; text-decoration:none}
+  .pill{background:#25D366; color:#111; padding:4px 8px; border-radius:9999px; font-size:.78rem; font-weight:800}
+  .toast{
+    position:fixed; left:50%; transform:translateX(-50%); bottom:24px; z-index:70;
+    background:#0f1113; border:var(--border); color:#fff; padding:10px 14px; border-radius:12px; box-shadow:var(--shadow); display:none;
+  }
+
+  /* UTIL */
+  .center{display:flex; align-items:center; justify-content:center}
+  .lead{color:#cfd3d7; max-width:840px}
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <header class="nav">
-    <div class="nav__inner">
-      <a class="brand" href="/">ÉDITION PRIVÉE</a>
-      <nav class="menu">
-        <a href="#coleccion">Colección</a>
-        <a href="#envio">Envío</a>
-        <a href="https://wa.me/525541266798" aria-label="WhatsApp">WhatsApp</a>
-        <a class="cta" href="https://wa.me/525541266798?text=Hola%20quiero%20ordenar%20Winter%20Icons%202025">Comprar ahora</a>
-      </nav>
-      <button class="burger" aria-label="Abrir menú" id="burger">☰</button>
-    </div>
-  </header>
+<!-- NAV -->
+<header class="nav">
+  <div class="container nav__inner">
+    <div class="brand" id="brand">Readdy AI</div>
+    <nav class="menu" id="menu">
+      <a href="#coleccion">Colección</a>
+      <a href="#innovacion">Innovación</a>
+      <a href="#limitadas">Ediciones Limitadas</a>
+      <a href="#testimonios">Testimonios</a>
+      <a class="btn btn-primary" href="#compra">Comprar Ahora</a>
+    </nav>
+    <button class="burger" id="burger">☰</button>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero__inner">
-      <div>
-        <p class="eyebrow">Winter Icons 2025</p>
-        <h1 class="h1">Piezas icónicas, entrega sin fricción</h1>
-        <p class="sub">Selección curada de polos, sweaters y accesorios premium. Atención personalizada y entrega rápida en Santa Fe y CDMX.</p>
-        <a class="cta" href="https://wa.me/525541266798?text=Quiero%20ver%20disponibilidad%20y%20tallas%20de%20Winter%20Icons%202025">Ver disponibilidad por WhatsApp</a>
-      </div>
-      <div class="hero__img">
-        <!-- Reemplaza por tu foto de portada -->
-        <img src="https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=1600&auto=format&fit=crop" alt="ÉDITION PRIVÉE portada">
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero__inner">
+    <div>
+      <h1 class="h1">Readdy AI</h1>
+      <div class="under"></div>
+      <h2 style="margin:0 0 12px; font-family:'Playfair Display',serif; font-weight:600">Smart Luxury</h2>
+      <p class="sub">Tecnología que se viste. Estilo que se siente.</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap">
+        <a class="btn btn-primary" href="#coleccion">Comprar Ahora</a>
+        <a class="btn btn-ghost" href="#coleccion">Explorar Colección</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- COLECCIÓN -->
-  <section id="coleccion" class="wrap">
-    <h2 class="h2">Colección destacada</h2>
-    <div class="grid">
-      <!-- Producto 1 -->
+<!-- COLECCIÓN -->
+<section id="coleccion" class="section">
+  <div class="container">
+    <h2 class="title">Colección Destacada</h2>
+    <p class="lead">Descubre nuestra selección de productos que fusionan tecnología avanzada con diseño elegante y funcionalidad premium.</p>
+    <div class="under"></div>
+
+    <div class="grid cols-3">
+      <!-- P1 -->
       <article class="card">
-        <img src="https://images.unsplash.com/photo-1520974769358-5f13956263db?q=80&w=1600&auto=format&fit=crop" alt="Sweater Polo Bear">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=1600&auto=format&fit=crop" alt="Sudadera Inteligente Pro">
+          <span class="badge">Solo 12 disponibles</span>
+        </div>
         <div class="card__body">
-          <h3 class="card__title">Polo Bear Sweater — Mid Grey</h3>
-          <p class="price">$3,700 MXN</p>
-          <a class="wacta" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20Polo%20Bear%20Sweater%20Mid%20Grey%20talla%20M%20(%243700).">
-            Comprar por WhatsApp
-          </a>
+          <h3 class="card__title">Sudadera Inteligente Pro</h3>
+          <p class="muted">Tecnología de regulación térmica integrada</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
+            <div class="price">$299</div>
+            <button class="btn btn-primary" onclick="addToCart('Sudadera Inteligente Pro')">Agregar al Carrito</button>
+          </div>
         </div>
       </article>
 
-      <!-- Producto 2 -->
+      <!-- P2 -->
       <article class="card">
-        <img src="https://images.unsplash.com/photo-1491555103944-7c647fd857e6?q=80&w=1600&auto=format&fit=crop" alt="Polo Classic">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1520974722053-6c0ad6c9e7e7?q=80&w=1600&auto=format&fit=crop" alt="Chaqueta Tech Crema">
+          <span class="badge">Solo 8 disponibles</span>
+        </div>
         <div class="card__body">
-          <h3 class="card__title">Polo Classic — Navy</h3>
-          <p class="price">$1,990 MXN</p>
-          <a class="wacta" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20Polo%20Classic%20Navy%20talla%20M%20(%241990).">
-            Comprar por WhatsApp
-          </a>
+          <h3 class="card__title">Chaqueta Tech Crema</h3>
+          <p class="muted">Conectividad inalámbrica y carga solar</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
+            <div class="price">$449</div>
+            <button class="btn btn-primary" onclick="addToCart('Chaqueta Tech Crema')">Agregar al Carrito</button>
+          </div>
         </div>
       </article>
 
-      <!-- Producto 3 -->
+      <!-- P3 -->
       <article class="card">
-        <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=1600&auto=format&fit=crop" alt="Cardigan Cable">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1600&auto=format&fit=crop" alt="Accesorio Tech Dorado">
+          <span class="badge">Solo 15 disponibles</span>
+        </div>
         <div class="card__body">
-          <h3 class="card__title">Cardigan Cable — Cream</h3>
-          <p class="price">$2,850 MXN</p>
-          <a class="wacta" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20Cardigan%20Cable%20Cream%20talla%20M%20(%242850).">
-            Comprar por WhatsApp
-          </a>
+          <h3 class="card__title">Accesorio Tech Dorado</h3>
+          <p class="muted">Monitoreo biométrico avanzado</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
+            <div class="price">$199</div>
+            <button class="btn btn-primary" onclick="addToCart('Accesorio Tech Dorado')">Agregar al Carrito</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- P4 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1600&auto=format&fit=crop" alt="Membresía Digital Elite">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Membresía Digital Elite</h3>
+          <p class="muted">Acceso exclusivo a lanzamientos</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
+            <div class="price">$99/año</div>
+            <button class="btn btn-primary" onclick="addToCart('Membresía Digital Elite')">Agregar al Carrito</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- P5 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1520975940460-4acb3b8d0c7a?q=80&w=1600&auto=format&fit=crop" alt="Camiseta Smart Basic">
+          <span class="badge">Solo 25 disponibles</span>
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Camiseta Smart Basic</h3>
+          <p class="muted">Fibras inteligentes antibacterianas</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
+            <div class="price">$149</div>
+            <button class="btn btn-primary" onclick="addToCart('Camiseta Smart Basic')">Agregar al Carrito</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- P6 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1520975809631-7d43a2e20c49?q=80&w=1600&auto=format&fit=crop" alt="Mochila Tech Premium">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Mochila Tech Premium</h3>
+          <p class="muted">Carga inalámbrica y compartimentos inteligentes</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
+            <div class="price">$349</div>
+            <button class="btn btn-primary" onclick="addToCart('Mochila Tech Premium')">Agregar al Carrito</button>
+          </div>
         </div>
       </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA AMPLIA -->
-  <section id="envio" class="wrap">
-    <div class="cta-wide">
-      <div>
-        <h3 class="h2" style="margin:0 0 8px">Envío y pago sin fricción</h3>
-        <p>Entrega el mismo día en Santa Fe y zonas cercanas. Pagos por transferencia, tarjeta y efectivo contra entrega. Cambios por talla sujetos a disponibilidad.</p>
-      </div>
-      <div>
-        <a class="cta" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20agendar%20entrega%20y%20conocer%20formas%20de%20pago.">Quiero agendar entrega</a>
+<!-- INNOVACIÓN (ancla) -->
+<section id="innovacion" class="section alt">
+  <div class="container">
+    <h2 class="title">Innovación</h2>
+    <div class="under"></div>
+    <p class="lead">Nuestros productos integran sensores, materiales inteligentes y módulos de conectividad pensados para elevar tu día a día sin sacrificar estética.</p>
+  </div>
+</section>
+
+<!-- EDICIONES LIMITADAS -->
+<section id="limitadas" class="section">
+  <div class="container">
+    <h2 class="title">Ediciones Limitadas</h2>
+    <div class="under"></div>
+    <p class="lead">Series exclusivas con pocas unidades por lanzamiento. Una vez agotadas, no volverán a producirse.</p>
+
+    <div class="counter" id="counter">
+      <div class="box"><div class="num" id="d">0</div><div class="lbl">DÍAS</div></div>
+      <div class="box"><div class="num" id="h">0</div><div class="lbl">HORAS</div></div>
+      <div class="box"><div class="num" id="m">0</div><div class="lbl">MIN</div></div>
+      <div class="box"><div class="num" id="s">0</div><div class="lbl">SEG</div></div>
+    </div>
+
+    <div class="grid cols-3">
+      <!-- L1 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1610384104070-d0f28c52f4a8?q=80&w=1600&auto=format&fit=crop" alt="Sudadera AI Genesis">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Sudadera AI Genesis</h3>
+          <p class="muted">Stock restante <strong>8 de 50</strong></p>
+          <div class="btn btn-primary" onclick="reserve('Sudadera AI Genesis')">Reservar Ahora</div>
+        </div>
+      </article>
+
+      <!-- L2 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1600&auto=format&fit=crop" alt="Chaqueta Future Edition">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Chaqueta Future Edition</h3>
+          <p class="muted">Stock restante <strong>3 de 25</strong></p>
+          <div class="btn btn-primary" onclick="reserve('Chaqueta Future Edition')">Reservar Ahora</div>
+        </div>
+      </article>
+
+      <!-- L3 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?q=80&w=1600&auto=format&fit=crop" alt="Accesorio Elite Gold">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Accesorio Elite Gold</h3>
+          <p class="muted">Stock restante <strong>15 de 100</strong></p>
+          <div class="btn btn-primary" onclick="reserve('Accesorio Elite Gold')">Reservar Ahora</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- COMPRA SIN FRICCIÓN -->
+<section id="compra" class="section alt">
+  <div class="container two">
+    <div>
+      <h2 class="title">Compra Sin Fricción</h2>
+      <div class="under"></div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="dot wapp">🟢</div>
+          <div>
+            <h4 style="margin:0 0 4px">WhatsApp Directo</h4>
+            <p class="muted" style="margin:0">Compra rápida y personalizada</p>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="https://wa.me/525541266798?text=Hola,%20quiero%20comprar%20Readdy%20AI" style="width:100%; text-align:center">Comprar por WhatsApp</a>
+
+        <div class="feature">
+          <div class="dot pay">💳</div>
+          <div>
+            <h4 style="margin:0 0 4px">Pago Seguro</h4>
+            <p class="muted" style="margin:0">Transferencia bancaria o tarjeta. Próximamente Stripe para pagos instantáneos.</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="dot ship">🚚</div>
+          <div>
+            <h4 style="margin:0 0 4px">Envío Premium</h4>
+            <p class="muted" style="margin:0">Entrega en 24–48h. Envío gratis en compras &gt; $200.</p>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div>© <span id="y"></span> ÉDITION PRIVÉE · CDMX</div>
-      <div><a href="https://wa.me/525541266798" style="color:inherit;text-decoration:none">WhatsApp: 55 4126 6798</a></div>
+    <form class="form" onsubmit="return sendLead(event)">
+      <h3>Solicitar Información</h3>
+      <div style="display:grid; gap:12px; margin-top:10px">
+        <input class="input" id="name" placeholder="Nombre completo" required />
+        <input class="input" id="phone" placeholder="Teléfono" />
+        <select class="select" id="product">
+          <option value="">Seleccionar producto</option>
+          <option>Sudadera Inteligente Pro</option>
+          <option>Chaqueta Tech Crema</option>
+          <option>Accesorio Tech Dorado</option>
+          <option>Membresía Digital Elite</option>
+        </select>
+        <textarea class="textarea" id="msg" maxlength="500" placeholder="Cuéntanos más sobre tus preferencias..."></textarea>
+        <button class="btn btn-primary" type="submit">Enviar Solicitud</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios" class="section">
+  <div class="container">
+    <h2 class="title">Lo Que Dicen Nuestros Clientes</h2>
+    <div class="under"></div>
+    <p class="lead">Profesionales de élite que han elegido Readdy AI para elevar su estilo y productividad.</p>
+
+    <div class="t-grid" style="margin-top:22px">
+      <div class="t">
+        <div class="row">
+          <img class="avatar" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=300&auto=format&fit=crop" alt="">
+          <div><strong>Carlos Mendoza</strong><div class="muted">Director de Tecnología · TechCorp</div></div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p>"Finalmente, tecnología que encaja con mi estilo. La sudadera inteligente es perfecta para mis largas jornadas."</p>
+      </div>
+
+      <div class="t">
+        <div class="row">
+          <img class="avatar" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=300&auto=format&fit=crop" alt="">
+          <div><strong>Ana Sofía Rivera</strong><div class="muted">Consultora de Negocios</div></div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p>"La calidad es excepcional y el diseño elegante. Cada pieza cuenta una historia de innovación."</p>
+      </div>
+
+      <div class="t">
+        <div class="row">
+          <img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop" alt="">
+          <div><strong>Miguel Ángel Torres</strong><div class="muted">Arquitecto Senior</div></div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p>"Valoro el diseño y la funcionalidad. Readdy AI logra el equilibrio perfecto entre ambos."</p>
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    // Año dinámico
-    document.getElementById('y').textContent = new Date().getFullYear();
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div>© <span id="year"></span> <span id="brandFoot">Readdy AI</span> · CDMX</div>
+    <div><a href="https://wa.me/525541266798" style="text-decoration:none; color:#cfd3d7">WhatsApp: 55 4126 6798</a></div>
+  </div>
+</footer>
 
-    // Menú móvil muy simple
-    const burger = document.getElementById('burger');
-    burger?.addEventListener('click', () => {
-      const nav = document.querySelector('.menu');
-      if(!nav) return;
-      const open = getComputedStyle(nav).display !== 'none';
-      nav.style.display = open ? 'none' : 'flex';
-    });
-  </script>
+<!-- FLOAT CHAT -->
+<div class="float">
+  <a href="https://wa.me/525541266798?text=Hola,%20quisiera%20hablar%20con%20Readdy%20AI" aria-label="WhatsApp">
+    💬 <span>Talk with Us</span> <span class="pill">Online</span>
+  </a>
+</div>
+
+<div id="toast" class="toast">Añadido al carrito</div>
+
+<script>
+  // ====== Config fácil de marca ======
+  const BRAND_NAME = 'Readdy AI'; // cambia por "ÉDITION PRIVÉE" si quieres
+  document.getElementById('brand').textContent = BRAND_NAME;
+  document.getElementById('brandFoot').textContent = BRAND_NAME;
+
+  // Año dinámico
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Menú móvil
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('menu');
+  function setMenuVisible(v){ menu.style.display = v ? 'flex' : ''; }
+  burger.addEventListener('click', ()=> {
+    const cur = getComputedStyle(menu).display !== 'none';
+    if(cur){ menu.style.display='none'; } else { menu.style.display='flex'; }
+  });
+  function onResize(){ if(innerWidth>860) setMenuVisible(false); }
+  addEventListener('resize', onResize);
+
+  // Toast util
+  const toastEl = document.getElementById('toast');
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.style.display='block';
+    clearTimeout(window.__t); window.__t = setTimeout(()=> toastEl.style.display='none', 1600);
+  }
+  // Add to cart demo
+  function addToCart(name){ toast(`${name} añadido al carrito`) }
+  // Reserve demo (abre WhatsApp)
+  function reserve(name){
+    const msg = encodeURIComponent(`Hola, quiero reservar: ${name}`);
+    window.open(`https://wa.me/525541266798?text=${msg}`, '_blank');
+  }
+
+  // Form → abre WhatsApp con los datos
+  function sendLead(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const product = document.getElementById('product').value;
+    const msg = document.getElementById('msg').value.trim();
+    const text = encodeURIComponent(
+      `Hola, soy ${name}.` +
+      (phone?` Tel: ${phone}.`:'') +
+      (product?` Producto de interés: ${product}.`:'') +
+      (msg?` Mensaje: ${msg}`:'')
+    );
+    window.open(`https://wa.me/525541266798?text=${text}`, '_blank');
+    toast('Solicitud enviada por WhatsApp');
+    return false;
+  }
+
+  // Countdown a 7 días desde ahora (ajusta si quieres fecha fija)
+  const target = new Date(Date.now() + 7*24*60*60*1000);
+  function tick(){
+    const now = new Date();
+    let s = Math.max(0, Math.floor((target-now)/1000));
+    const d = Math.floor(s/86400); s-=d*86400;
+    const h = Math.floor(s/3600); s-=h*3600;
+    const m = Math.floor(s/60); s-=m*60;
+    document.getElementById('d').textContent = d.toString();
+    document.getElementById('h').textContent = h.toString().padStart(2,'0');
+    document.getElementById('m').textContent = m.toString().padStart(2,'0');
+    document.getElementById('s').textContent = s.toString().padStart(2,'0');
+    requestAnimationFrame(()=>setTimeout(tick, 1000));
+  }
+  tick();
+</script>
 </body>
 </html>
+
 
 
 
