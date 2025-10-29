@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ÉDITION PRIVÉE — Winter Icons 2025</title>
+  <meta name="description" content="ÉDITION PRIVÉE · Winter Icons 2025 · Piezas icónicas seleccionadas con entrega premium en CDMX." />
+  <meta name="theme-color" content="#FBF1EB" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#E65103;
+      --primary-2:#BF4408;
+      --surface:#ffffff;
+      --surface-2:#FBF1EB;
+      --text:#191818;
+      --text-2:#4a4a4a;
+      --accent:#9ec9e8;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(0,0,0,.12);
+      --max:1100px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--surface);color:var(--text)}
+    body{font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; line-height:1.5}
+
+    /* NAV */
+    .nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.75);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06)}
+    .nav__inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px}
+    .brand{font-family:"Cinzel",serif;font-weight:700;letter-spacing:.06em;text-decoration:none;color:var(--text)}
+    .menu{display:flex;gap:20px;align-items:center}
+    .menu a{color:var(--text);text-decoration:none}
+    .cta{display:inline-flex;gap:8px;align-items:center;padding:10px 16px;border-radius:9999px;background:var(--primary);color:#fff;text-decoration:none;border:1px solid var(--primary); box-shadow:var(--shadow)}
+    .cta:hover{background:var(--primary-2);border-color:var(--primary-2)}
+    .burger{display:none; width:40px;height:40px;border:1px solid rgba(0,0,0,.1);border-radius:9999px;background:#fff}
+
+    /* HERO */
+    .hero{background:var(--surface-2)}
+    .hero__inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;padding:56px 20px}
+    .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:.9rem;margin:0 0 6px}
+    .h1{font-family:"Cinzel",serif;font-size:clamp(28px,4.2vw,48px);line-height:1.1;margin:0 0 10px}
+    .sub{color:var(--text-2);font-size:1.125rem;margin:0 0 24px}
+    .hero__img{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#fff}
+    .hero__img img{display:block;width:100%;height:100%;object-fit:cover}
+
+    /* GRID */
+    .wrap{max-width:var(--max);margin:0 auto;padding:56px 20px}
+    .h2{font-family:"Cinzel",serif;font-size:clamp(22px,3vw,32px);margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{border:1px solid rgba(0,0,0,.08);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+    .card img{width:100%;height:230px;object-fit:cover;display:block}
+    .card__body{padding:14px 14px 16px}
+    .card__title{font-weight:600;margin:0 0 6px}
+    .price{color:var(--text-2);margin:0 0 12px}
+    .wacta{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:1px solid var(--primary);color:#fff;background:var(--primary);text-decoration:none}
+    .wacta:hover{background:var(--primary-2);border-color:var(--primary-2)}
+
+    /* CTA WIDE */
+    .cta-wide{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .cta-wide p{margin:0;color:var(--text-2)}
+
+    /* FOOTER */
+    .footer{border-top:1px solid rgba(0,0,0,.08);background:#fff}
+    .footer__inner{max-width:var(--max);margin:0 auto;padding:24px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;color:var(--text-2)}
+
+    /* RESPONSIVE */
+    @media (max-width:900px){
+      .hero__inner{grid-template-columns:1fr;gap:20px}
+      .grid{grid-template-columns:1fr 1fr}
+      .cta-wide{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .menu{display:none}
+      .burger{display:inline-grid;place-items:center}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a class="brand" href="/">ÉDITION PRIVÉE</a>
+      <nav class="menu">
+        <a href="#coleccion">Colección</a>
+        <a href="#envio">Envío</a>
+        <a href="https://wa.me/525541266798" aria-label="WhatsApp">WhatsApp</a>
+        <a class="cta" href="https://wa.me/525541266798?text=Hola%20quiero%20ordenar%20Winter%20Icons%202025">Comprar ahora</a>
+      </nav>
+      <button class="burger" aria-label="Abrir menú" id="burger">☰</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__inner">
+      <div>
+        <p class="eyebrow">Winter Icons 2025</p>
+        <h1 class="h1">Piezas icónicas, entrega sin fricción</h1>
+        <p class="sub">Selección curada de polos, sweaters y accesorios premium. Atención personalizada y entrega rápida en Santa Fe y CDMX.</p>
+        <a class="cta" href="https://wa.me/525541266798?text=Quiero%20ver%20disponibilidad%20y%20tallas%20de%20Winter%20Icons%202025">Ver disponibilidad por WhatsApp</a>
+      </div>
+      <div class="hero__img">
+        <!-- Reemplaza por tu foto de portada -->
+        <img src="https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=1600&auto=format&fit=crop" alt="ÉDITION PRIVÉE portada">
+      </div>
+    </div>
+  </section>
+
+  <!-- COLECCIÓN -->
+  <section id="coleccion" class="wrap">
+    <h2 class="h2">Colección destacada</h2>
+    <div class="grid">
+      <!-- Producto 1 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1520974769358-5f13956263db?q=80&w=1600&auto=format&fit=crop" alt="Sweater Polo Bear">
+        <div class="card__body">
+          <h3 class="card__title">Polo Bear Sweater — Mid Grey</h3>
+          <p class="price">$3,700 MXN</p>
+          <a class="wacta" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20Polo%20Bear%20Sweater%20Mid%20Grey%20talla%20M%20(%243700).">
+            Comprar por WhatsApp
+          </a>
+        </div>
+      </article>
+
+      <!-- Producto 2 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1491555103944-7c647fd857e6?q=80&w=1600&auto=format&fit=crop" alt="Polo Classic">
+        <div class="card__body">
+          <h3 class="card__title">Polo Classic — Navy</h3>
+          <p class="price">$1,990 MXN</p>
+          <a class="wacta" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20Polo%20Classic%20Navy%20talla%20M%20(%241990).">
+            Comprar por WhatsApp
+          </a>
+        </div>
+      </article>
+
+      <!-- Producto 3 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=1600&auto=format&fit=crop" alt="Cardigan Cable">
+        <div class="card__body">
+          <h3 class="card__title">Cardigan Cable — Cream</h3>
+          <p class="price">$2,850 MXN</p>
+          <a class="wacta" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20Cardigan%20Cable%20Cream%20talla%20M%20(%242850).">
+            Comprar por WhatsApp
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA AMPLIA -->
+  <section id="envio" class="wrap">
+    <div class="cta-wide">
+      <div>
+        <h3 class="h2" style="margin:0 0 8px">Envío y pago sin fricción</h3>
+        <p>Entrega el mismo día en Santa Fe y zonas cercanas. Pagos por transferencia, tarjeta y efectivo contra entrega. Cambios por talla sujetos a disponibilidad.</p>
+      </div>
+      <div>
+        <a class="cta" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20agendar%20entrega%20y%20conocer%20formas%20de%20pago.">Quiero agendar entrega</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>© <span id="y"></span> ÉDITION PRIVÉE · CDMX</div>
+      <div><a href="https://wa.me/525541266798" style="color:inherit;text-decoration:none">WhatsApp: 55 4126 6798</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Menú móvil muy simple
+    const burger = document.getElementById('burger');
+    burger?.addEventListener('click', () => {
+      const nav = document.querySelector('.menu');
+      if(!nav) return;
+      const open = getComputedStyle(nav).display !== 'none';
+      nav.style.display = open ? 'none' : 'flex';
+    });
+  </script>
+</body>
+</html>
+
+
+
+
