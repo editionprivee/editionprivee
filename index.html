@@ -5,113 +5,140 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ÉDITION PRIVÉE — Polo Bear Sweaters</title>
 <meta name="description" content="Polo Bear Sweaters edición invierno. Entrega premium en CDMX. Compra sin fricción por WhatsApp." />
-<meta name="theme-color" content="#F3EDE6" />
+<meta name="theme-color" content="#F7F1EA" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* Paleta suave tipo editorial invernal */
-    --cream:#F7F1EA;
-    --cream-2:#FBF7F2;
-    --teddy:#8B6A4A;
-    --teddy-2:#6F543D;
-    --pink:#F2C9D8;
-    --blue:#CFE3F6;
-    --gray:#9AA0A6;
-    --ink:#1B1A19;
+    /* —— Paleta RL-pastel de tu marca —— */
+    --cream:#F7F1EA;        /* fondo */
+    --cream-2:#FBF7F2;      /* fondo suave */
+    --pink:#F2C9D8;         /* acentos suaves */
+    --blue:#CFE3F6;         /* badges fríos */
+    --teddy:#8B6A4A;        /* marrón cálido principal */
+    --teddy-2:#6F543D;      /* hover/oscuro */
+    --gray:#9AA0A6;         /* texto secundario */
+    --ink:#1B1A19;          /* texto principal */
 
-    --brand:#8B6A4A;         /* marrón teddy elegante */
-    --brand-2:#6F543D;
-    --accent:#C63C3C;        /* toque navideño sobrio */
-    --max:1180px;
+    /* Compat con tu CSS original */
+    --bg: var(--cream);
+    --bg-soft: var(--cream-2);
+    --card:#ffffff;
+    --muted: var(--gray);
+    --text: var(--ink);
+    --brand: var(--teddy);
+    --brand-2: var(--teddy-2);
+    --max:1200px;
     --radius:18px;
-    --shadow:0 12px 35px rgba(0,0,0,.12);
-    --border:1px solid rgba(0,0,0,.10);
+    --shadow:0 10px 30px rgba(0,0,0,.10);
+    --border:1px solid rgba(0,0,0,.08);
   }
-
   *{box-sizing:border-box}
   html,body{margin:0}
   body{
-    background:linear-gradient(180deg,var(--cream),var(--cream-2));
-    color:var(--ink);
-    font-family:"Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    color:var(--text); background:linear-gradient(180deg,var(--cream),var(--cream-2));
     line-height:1.55;
   }
   a{color:inherit}
   .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+    padding:.9rem 1.2rem; border-radius:9999px; font-weight:700;
+    border:1px solid var(--brand); cursor:pointer; text-decoration:none; transition:.2s ease;
+    background:var(--brand); color:#fff;
+  }
+  .btn:hover{background:var(--brand-2); border-color:var(--brand-2)}
+  .btn-ghost{background:transparent; color:var(--brand)}
+  .btn-ghost:hover{background:#fff}
 
   /* NAV */
-  .nav{position:sticky; top:0; z-index:40; backdrop-filter:blur(10px);
-       background:rgba(255,255,255,.75); border-bottom:var(--border)}
-  .nav__inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0}
-  .brand{display:flex; align-items:center; gap:12px; text-decoration:none}
-  .brand img{width:40px; height:40px; object-fit:contain}
-  .brand span{font-family:"Cinzel", serif; font-weight:700; letter-spacing:.06em}
-  .menu{display:flex; gap:22px; align-items:center}
-  .menu a{text-decoration:none; color:#3b3b3b; font-weight:600}
+  .nav{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
+    background:rgba(255,255,255,.75); border-bottom:var(--border)}
+  .nav__inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+  .brand{display:flex; align-items:center; gap:10px; font-family:"Playfair Display",serif; letter-spacing:.04em; font-weight:700; font-size:20px}
+  .brand img{width:40px; height:40px; object-fit:contain} /* 👉 tu logo */
+  .menu{display:flex; gap:26px; align-items:center}
+  .menu a{color:#3b3b3b; text-decoration:none; font-weight:600}
   .menu a:hover{color:var(--brand)}
-  .btn{display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
-       padding:.85rem 1.15rem; border-radius:9999px; border:1px solid var(--brand);
-       background:var(--brand); color:#fff; text-decoration:none; font-weight:700}
-  .btn:hover{background:var(--brand-2); border-color:var(--brand-2)}
-  .ghost{background:transparent; color:var(--brand)}
-  .ghost:hover{background:#fff}
+  .burger{display:none}
 
   /* HERO */
   .hero{position:relative; overflow:hidden; border-bottom:var(--border)}
-  .hero__inner{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center; padding:52px 0}
-  .eyebrow{color:var(--accent); letter-spacing:.14em; text-transform:uppercase; font-weight:800; font-size:.9rem; margin:0 0 6px}
-  .h1{font-family:"Cinzel",serif; font-size:clamp(28px,4.8vw,56px); line-height:1.05; margin:0 0 10px}
-  .sub{color:#4c4c4c; font-size:1.1rem; margin:0 0 22px}
-  .hero__media{display:grid; place-items:center}
-  .hero__media img{width:100%; max-width:420px; filter:drop-shadow(0 10px 22px rgba(0,0,0,.15))}
-
-  /* Snow (sutil) */
-  .snow{pointer-events:none; position:absolute; inset:0; background-image:
+  .hero::after{ /* nieve sutil navideña */
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background-image:
       radial-gradient(2px 2px at 20% 10%, rgba(255,255,255,.7) 50%, transparent 51%),
       radial-gradient(2px 2px at 80% 30%, rgba(255,255,255,.6) 50%, transparent 51%),
-      radial-gradient(2px 2px at 50% 60%, rgba(255,255,255,.65) 50%, transparent 51%),
-      radial-gradient(1.6px 1.6px at 30% 80%, rgba(255,255,255,.55) 50%, transparent 51%),
-      radial-gradient(1.6px 1.6px at 65% 15%, rgba(255,255,255,.55) 50%, transparent 51%);
-      animation:snowfall 18s linear infinite}
-  @keyframes snowfall{to{background-position:0 100vh, 0 110vh, 0 120vh, 0 90vh, 0 130vh}}
+      radial-gradient(2px 2px at 50% 60%, rgba(255,255,255,.65) 50%, transparent 51%);
+    animation:snow 18s linear infinite;
+  }
+  @keyframes snow{to{background-position:0 120vh}}
+  .hero__inner{min-height:64vh; display:grid; gap:28px; align-items:center; grid-template-columns:1.1fr .9fr}
+  .h1{font-family:"Playfair Display",serif; font-size: clamp(36px, 6vw, 68px); line-height:1.05; margin:0 0 12px}
+  .sub{color:#4f4f4f; font-size:clamp(16px,2vw,22px); margin:0 0 22px}
+  .hero__media{display:grid; place-items:center}
+  .hero__media img{width:100%; max-width:420px; filter:drop-shadow(0 10px 22px rgba(0,0,0,.12))} /* 👉 logo grande en hero */
 
-  /* SECTION */
-  .section{padding:64px 0}
-  .title{font-family:"Cinzel",serif; font-size:clamp(24px,3.4vw,40px); margin:0 0 6px}
-  .under{width:90px; height:4px; background:var(--brand); border-radius:6px; margin:12px 0 22px}
+  /* SECTION TITLES */
+  .section{padding:72px 0; background:transparent}
+  .section.alt{background:var(--bg-soft)}
+  .title{font-family:"Playfair Display",serif; font-size:clamp(28px,4vw,48px); margin:0 0 8px}
+  .under{width:90px; height:4px; background:var(--brand); border-radius:6px; margin:14px 0 26px}
 
-  /* GRID */
-  .grid{display:grid; gap:22px}
+  /* PRODUCT GRID */
+  .grid{display:grid; gap:24px}
   @media (min-width:900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
   @media (min-width:640px) and (max-width:899.9px){ .grid.cols-3{grid-template-columns:repeat(2,1fr)} }
-  @media (max-width:639.9px){ .hero__inner{grid-template-columns:1fr} .grid.cols-3{grid-template-columns:1fr} .menu{display:none} }
+  @media (max-width:639.9px){ .grid.cols-3{grid-template-columns:1fr} .hero__inner{grid-template-columns:1fr} }
 
-  /* CARD */
-  .card{background:#fff; border:var(--border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}
+  .card{background:var(--card); border:var(--border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}
   .card__media{position:relative}
-  .card__media img{display:block; width:100%; height:280px; object-fit:cover}
-  .badge{position:absolute; top:12px; left:12px; background:rgba(198,60,60,.9); color:#fff;
-         border-radius:10px; padding:.35rem .6rem; font-size:.8rem; font-weight:800; letter-spacing:.02em}
-  .card__body{padding:14px 14px 16px}
-  .card__title{margin:0 0 6px; font-weight:800}
-  .muted{color:#666; margin:0 0 10px}
-  .price{font-weight:900; color:var(--brand)}
-  .cta-row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:6px}
+  .card__media img{display:block; width:100%; height:300px; object-fit:cover}
+  .badge{
+    position:absolute; top:14px; left:14px; background:var(--blue); color:#113;
+    border:1px solid rgba(0,0,0,.08); padding:.35rem .6rem; border-radius:10px; font-size:.82rem; font-weight:800;
+  }
+  .card__body{padding:16px 16px 18px}
+  .card__title{margin:0 0 6px; font-weight:800; font-size:1.1rem}
+  .muted{color:var(--muted); margin:0 0 10px}
+  .price{font-weight:900; color:var(--brand); margin-top:2px}
 
-  /* INFO */
-  .info{display:grid; gap:16px}
-  .tile{display:flex; gap:12px; align-items:center; background:#fff; border:var(--border); border-radius:16px; padding:14px 16px; box-shadow:var(--shadow)}
-  .dot{width:36px; height:36px; border-radius:10px; display:grid; place-items:center; font-size:18px}
-  .green{background:#25D36622; border:1px solid #25D36655}
-  .gold{background:#EFD18B33; border:1px solid #EFD18B66}
-  .blue{background:#A6D3FF33; border:1px solid #A6D3FF66}
+  /* LIMITED / INFO */
+  .counter{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:22px 0 32px; background:#fff; border:var(--border); border-radius:14px; padding:16px 18px}
+  .counter .box{text-align:center}
+  .counter .num{font-size:1.8rem; font-weight:800}
+  .counter .lbl{color:var(--muted); font-size:.85rem}
+
+  .features{display:grid; gap:18px}
+  .feature{display:flex; gap:14px; align-items:center; background:#fff; border:var(--border); border-radius:16px; padding:16px 18px}
+  .dot{width:38px; height:38px; border-radius:10px; display:grid; place-items:center}
+  .dot.wapp{background:#25D36622; color:#25D366; border:1px solid #25D36655}
+  .dot.pay{background:#f6c34322; color:#f6c343; border:1px solid #f6c34355}
+  .dot.ship{background:#8dd1ff22; color:#8dd1ff; border:1px solid #8dd1ff55}
+
+  .form{background:#fff; border:var(--border); border-radius:16px; padding:18px; box-shadow:var(--shadow)}
+  .form h3{margin:0 0 12px}
+  .input,.select,.textarea{width:100%; background:#fff; color:var(--text); border:1px solid rgba(0,0,0,.12); border-radius:12px; padding:12px 14px; outline:none; transition:.2s ease; font:inherit}
+  .input:focus,.select:focus,.textarea:focus{border-color:var(--brand)}
+  .textarea{min-height:120px; resize:vertical}
+
+  .two{display:grid; gap:20px}
+  @media (min-width:980px){ .two{grid-template-columns:1fr 1fr} }
+
+  .t-grid{display:grid; gap:20px}
+  @media (min-width:980px){ .t-grid{grid-template-columns:repeat(3,1fr)} }
+  .t{background:#fff; border:var(--border); border-radius:16px; padding:18px}
 
   .footer{border-top:var(--border); background:#fff}
-  .footer__inner{padding:20px 0; display:flex; justify-content:space-between; color:#4a4a4a; flex-wrap:wrap; gap:10px}
-  .float{position:fixed; right:18px; bottom:18px; z-index:50}
-  .float a{background:var(--accent); color:#fff; padding:.9rem 1rem; border-radius:9999px; text-decoration:none; font-weight:800; box-shadow:var(--shadow)}
+  .footer__inner{padding:22px 0; color:#4a4a4a; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  .float{position:fixed; right:18px; bottom:18px; z-index:60; background:var(--pink); border:1px solid rgba(0,0,0,.08); border-radius:9999px; box-shadow:var(--shadow)}
+  .float a{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; color:#111; font-weight:800; text-decoration:none}
+  .pill{background:#25D366; color:#111; padding:4px 8px; border-radius:9999px; font-size:.78rem; font-weight:800}
+  .toast{position:fixed; left:50%; transform:translateX(-50%); bottom:24px; z-index:70; background:#111; border:1px solid rgba(255,255,255,.08); color:#fff; padding:10px 14px; border-radius:12px; box-shadow:var(--shadow); display:none}
+  .center{display:flex; align-items:center; justify-content:center}
+  .lead{color:#4f4f4f; max-width:840px}
 </style>
 </head>
 <body>
@@ -119,34 +146,35 @@
 <!-- NAV -->
 <header class="nav">
   <div class="container nav__inner">
-    <a class="brand" href="#">
-      <img src="assets/logo-bear.png" alt="ÉDITION PRIVÉE logo">
-      <span>ÉDITION PRIVÉE</span>
-    </a>
-    <nav class="menu">
+    <div class="brand">
+      <img src="assets/logo-bear.png" alt="ÉDITION PRIVÉE" /> <!-- 👉 cambia la ruta si tu logo tiene otro nombre -->
+      <span id="brand">ÉDITION PRIVÉE</span>
+    </div>
+    <nav class="menu" id="menu">
       <a href="#coleccion">Colección</a>
-      <a href="#envio">Envío y Pago</a>
-      <a href="#contacto" class="btn ghost">WhatsApp</a>
-      <a href="#coleccion" class="btn">Comprar ahora</a>
+      <a href="#innovacion">Envío y Pago</a>
+      <a href="#limitadas">Ediciones Limitadas</a>
+      <a href="#testimonios">Testimonios</a>
+      <a class="btn" href="#compra">Comprar Ahora</a>
     </nav>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="snow"></div>
   <div class="container hero__inner">
     <div>
-      <p class="eyebrow">Winter Icons 2025</p>
       <h1 class="h1">Polo Bear Sweaters</h1>
-      <p class="sub">Edición invernal con toque navideño. Atención personalizada y entrega premium en Santa Fe y CDMX.</p>
+      <div class="under"></div>
+      <h2 style="margin:0 0 12px; font-family:'Playfair Display',serif; font-weight:600">Winter Icons · $3,900 MXN</h2>
+      <p class="sub">Edición invernal con toque navideño. Atención personalizada y entrega premium en CDMX.</p>
       <div style="display:flex; gap:12px; flex-wrap:wrap">
         <a class="btn" href="#coleccion">Ver colección</a>
-        <a class="btn ghost" href="https://wa.me/525541266798?text=Hola%20Leslie,%20quiero%20ver%20tallas%20y%20disponibilidad%20de%20Polo%20Bear%20Sweaters.">WhatsApp</a>
+        <a class="btn-ghost" href="https://wa.me/525541266798?text=Hola,%20quiero%20ver%20tallas%20y%20disponibilidad%20de%20Polo%20Bear%20Sweaters.">WhatsApp</a>
       </div>
     </div>
     <div class="hero__media">
-      <img src="assets/logo-bear.png" alt="Bear tuxedo logo">
+      <img src="assets/logo-bear.png" alt="Logo ÉDITION PRIVÉE"> <!-- 👉 también puedes mostrar una foto hero -->
     </div>
   </div>
 </section>
@@ -154,27 +182,28 @@
 <!-- COLECCIÓN -->
 <section id="coleccion" class="section">
   <div class="container">
-    <h2 class="title">Colección destacada</h2>
+    <h2 class="title">Colección Destacada</h2>
+    <p class="lead">Todos los modelos a <strong>$3,900 MXN</strong>. Pide tu talla por WhatsApp.</p>
     <div class="under"></div>
-    <div class="grid cols-3">
 
-      <!-- 1 -->
+    <div class="grid cols-3">
+      <!-- 👉 Duplica un <article> para agregar más productos. Solo cambia imagen, título y enlace WA. -->
+
       <article class="card">
         <div class="card__media">
           <img src="assets/sweater-golf-navy.jpg" alt="Polo Bear Golf Navy">
-          <span class="badge">Edición Holiday</span>
+          <span class="badge">Holiday</span>
         </div>
         <div class="card__body">
           <h3 class="card__title">Polo Bear Golf — Navy</h3>
-          <p class="muted">Algodón premium. Corte unisex.</p>
-          <div class="cta-row">
+          <p class="muted">Algodón premium · Corte unisex</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
             <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Polo%20Bear%20Golf%20Navy%20($3900)%20talla%20M.">Comprar por WhatsApp</a>
+            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Polo%20Bear%20Golf%20Navy%20($3900)%20talla%20M.">Comprar</a>
           </div>
         </div>
       </article>
 
-      <!-- 2 -->
       <article class="card">
         <div class="card__media">
           <img src="assets/sweater-aviator-olive.jpg" alt="Aviator Olive">
@@ -182,31 +211,29 @@
         </div>
         <div class="card__body">
           <h3 class="card__title">Aviator — Olive</h3>
-          <p class="muted">Look aviador, tejido grueso.</p>
-          <div class="cta-row">
+          <p class="muted">Tejido grueso · Vibe aviador</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
             <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Aviator%20Olive%20($3900)%20talla%20M.">Comprar por WhatsApp</a>
+            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Aviator%20Olive%20($3900)%20talla%20M.">Comprar</a>
           </div>
         </div>
       </article>
 
-      <!-- 3 -->
       <article class="card">
         <div class="card__media">
-          <img src="assets/sweater-pink-lady.jpg" alt="Pink Lady">
+          <img src="assets/sweater-pink-lady.jpg" alt="Pink Lady Ivory">
           <span class="badge">Favorito</span>
         </div>
         <div class="card__body">
           <h3 class="card__title">Pink Lady — Ivory</h3>
-          <p class="muted">Pastel suave, detalle bordado.</p>
-          <div class="cta-row">
+          <p class="muted">Pastel suave · Detalle bordado</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
             <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Pink%20Lady%20Ivory%20($3900)%20talla%20M.">Comprar por WhatsApp</a>
+            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Pink%20Lady%20Ivory%20($3900)%20talla%20M.">Comprar</a>
           </div>
         </div>
       </article>
 
-      <!-- 4 -->
       <article class="card">
         <div class="card__media">
           <img src="assets/sweater-charro.jpg" alt="Charro Fringe">
@@ -214,31 +241,29 @@
         </div>
         <div class="card__body">
           <h3 class="card__title">Charro Fringe — Cream</h3>
-          <p class="muted">Detalle flecos y sombrero.</p>
-          <div class="cta-row">
+          <p class="muted">Flecos y sombrero · Cream</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
             <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Charro%20Fringe%20Cream%20($3900)%20talla%20M.">Comprar por WhatsApp</a>
+            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Charro%20Fringe%20Cream%20($3900)%20talla%20M.">Comprar</a>
           </div>
         </div>
       </article>
 
-      <!-- 5 -->
       <article class="card">
         <div class="card__media">
-          <img src="assets/sweater-nurse-blue.jpg" alt="Nurse Blue">
+          <img src="assets/sweater-nurse-blue.jpg" alt="Nurse Baby Blue">
           <span class="badge">Winter Soft</span>
         </div>
         <div class="card__body">
           <h3 class="card__title">Nurse — Baby Blue</h3>
-          <p class="muted">Azul cielo, tejido suave.</p>
-          <div class="cta-row">
+          <p class="muted">Suavidad · Azul cielo</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
             <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Nurse%20Baby%20Blue%20($3900)%20talla%20M.">Comprar por WhatsApp</a>
+            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Nurse%20Baby%20Blue%20($3900)%20talla%20M.">Comprar</a>
           </div>
         </div>
       </article>
 
-      <!-- 6 -->
       <article class="card">
         <div class="card__media">
           <img src="assets/sweater-parisian.jpg" alt="Parisian Noir">
@@ -246,35 +271,132 @@
         </div>
         <div class="card__body">
           <h3 class="card__title">Parisian — Noir</h3>
-          <p class="muted">Rayas elegantes, vibe city.</p>
-          <div class="cta-row">
+          <p class="muted">Rayas elegantes · City vibe</p>
+          <div style="display:flex; align-items:center; justify-content:space-between">
             <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Parisian%20Noir%20($3900)%20talla%20M.">Comprar por WhatsApp</a>
+            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Parisian%20Noir%20($3900)%20talla%20M.">Comprar</a>
           </div>
         </div>
       </article>
-
     </div>
   </div>
 </section>
 
-<!-- ENVÍO Y PAGO -->
-<section id="envio" class="section">
+<!-- INNOVACIÓN / ENVÍO Y PAGO -->
+<section id="innovacion" class="section alt">
   <div class="container">
-    <h2 class="title">Envío y pago sin fricción</h2>
+    <h2 class="title">Envío y Pago</h2>
     <div class="under"></div>
-    <div class="info">
-      <div class="tile">
-        <div class="dot green">🟢</div>
-        <div><strong>WhatsApp Directo</strong><br><span class="muted">Compra rápida y personalizada.</span></div>
+    <p class="lead">WhatsApp directo, pago seguro y entrega premium en Santa Fe y zonas cercanas.</p>
+  </div>
+</section>
+
+<!-- EDICIONES LIMITADAS -->
+<section id="limitadas" class="section">
+  <div class="container">
+    <h2 class="title">Ediciones Limitadas</h2>
+    <div class="under"></div>
+    <p class="lead">Series exclusivas. Una vez agotadas, no vuelven.</p>
+
+    <div class="counter" id="counter">
+      <div class="box"><div class="num" id="d">0</div><div class="lbl">DÍAS</div></div>
+      <div class="box"><div class="num" id="h">0</div><div class="lbl">HORAS</div></div>
+      <div class="box"><div class="num" id="m">0</div><div class="lbl">MIN</div></div>
+      <div class="box"><div class="num" id="s">0</div><div class="lbl">SEG</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPRA SIN FRICCIÓN -->
+<section id="compra" class="section alt">
+  <div class="container two">
+    <div>
+      <h2 class="title">Compra Sin Fricción</h2>
+      <div class="under"></div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="dot wapp">🟢</div>
+          <div>
+            <h4 style="margin:0 0 4px">WhatsApp Directo</h4>
+            <p class="muted" style="margin:0">Compra rápida y personalizada</p>
+          </div>
+        </div>
+        <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20comprar%20Polo%20Bear%20Sweaters" style="width:100%; text-align:center">Comprar por WhatsApp</a>
+
+        <div class="feature">
+          <div class="dot pay">💳</div>
+          <div>
+            <h4 style="margin:0 0 4px">Pago Seguro</h4>
+            <p class="muted" style="margin:0">Transferencia o tarjeta. Recibos digitales.</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="dot ship">🚚</div>
+          <div>
+            <h4 style="margin:0 0 4px">Envío Premium</h4>
+            <p class="muted" style="margin:0">Mismo día en Santa Fe.</p>
+          </div>
+        </div>
       </div>
-      <div class="tile">
-        <div class="dot gold">💳</div>
-        <div><strong>Pago seguro</strong><br><span class="muted">Transferencia o tarjeta. Recibos digitales.</span></div>
+    </div>
+
+    <!-- Form → WhatsApp -->
+    <form class="form" onsubmit="return sendLead(event)">
+      <h3>Solicitar Información</h3>
+      <div style="display:grid; gap:12px; margin-top:10px">
+        <input class="input" id="name" placeholder="Nombre completo" required />
+        <input class="input" id="phone" placeholder="Teléfono" />
+        <select class="select" id="product">
+          <option value="">Seleccionar producto</option>
+          <option>Polo Bear Golf — Navy</option>
+          <option>Aviator — Olive</option>
+          <option>Pink Lady — Ivory</option>
+          <option>Charro Fringe — Cream</option>
+          <option>Nurse — Baby Blue</option>
+          <option>Parisian — Noir</option>
+        </select>
+        <textarea class="textarea" id="msg" maxlength="500" placeholder="Cuéntanos tu talla y preferencia de entrega..."></textarea>
+        <button class="btn" type="submit">Enviar Solicitud</button>
       </div>
-      <div class="tile">
-        <div class="dot blue">🚚</div>
-        <div><strong>Entrega premium</strong><br><span class="muted">Mismo día en Santa Fe y zonas cercanas.</span></div>
+    </form>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios" class="section">
+  <div class="container">
+    <h2 class="title">Lo Que Dicen Nuestros Clientes</h2>
+    <div class="under"></div>
+    <p class="lead">Profesionales de élite que aman ÉDITION PRIVÉE.</p>
+
+    <div class="t-grid" style="margin-top:22px">
+      <div class="t">
+        <div class="row" style="display:flex; gap:12px; align-items:center; margin-bottom:10px">
+          <img class="avatar" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=300&auto=format&fit=crop" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,.12)" alt="">
+          <div><strong>Carlos Mendoza</strong><div class="muted">Director de Tecnología</div></div>
+        </div>
+        <div style="color:#ffb400">★★★★★</div>
+        <p>"Calidad excepcional y atención inmediata por WhatsApp."</p>
+      </div>
+
+      <div class="t">
+        <div class="row" style="display:flex; gap:12px; align-items:center; margin-bottom:10px">
+          <img class="avatar" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=300&auto=format&fit=crop" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,.12)" alt="">
+          <div><strong>Ana Sofía Rivera</strong><div class="muted">Consultora</div></div>
+        </div>
+        <div style="color:#ffb400">★★★★★</div>
+        <p>"Sin fricción. Pagué y recibí el mismo día en Santa Fe."</p>
+      </div>
+
+      <div class="t">
+        <div class="row" style="display:flex; gap:12px; align-items:center; margin-bottom:10px">
+          <img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,.12)" alt="">
+          <div><strong>Miguel Ángel Torres</strong><div class="muted">Arquitecto</div></div>
+        </div>
+        <div style="color:#ffb400">★★★★★</div>
+        <p>"Me encantó el acabado del tejido. Repetiré compra."</p>
       </div>
     </div>
   </div>
@@ -283,24 +405,66 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div class="container footer__inner">
-    <div>© <span id="y"></span> ÉDITION PRIVÉE · CDMX</div>
-    <div id="contacto"><a href="https://wa.me/525541266798" style="text-decoration:none; color:var(--brand)">WhatsApp: 55 4126 6798</a></div>
+    <div>© <span id="year"></span> <span id="brandFoot">ÉDITION PRIVÉE</span> · CDMX</div>
+    <div><a href="https://wa.me/525541266798" style="text-decoration:none; color:var(--brand)">WhatsApp: 55 4126 6798</a></div>
   </div>
 </footer>
 
-<!-- FLOAT WA -->
+<!-- FLOAT CHAT -->
 <div class="float">
-  <a href="https://wa.me/525541266798?text=Hola,%20quiero%20comprar%20Polo%20Bear%20Sweaters.">💬 Comprar por WhatsApp</a>
+  <a href="https://wa.me/525541266798?text=Hola,%20quiero%20comprar%20Polo%20Bear%20Sweaters">
+    💬 <span>Comprar por WhatsApp</span> <span class="pill">Online</span>
+  </a>
 </div>
 
+<div id="toast" class="toast">Añadido al carrito</div>
+
 <script>
-  document.getElementById('y').textContent = new Date().getFullYear();
+  // Año dinámico
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Toast util
+  const toastEl = document.getElementById('toast');
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.style.display='block';
+    clearTimeout(window.__t); window.__t = setTimeout(()=> toastEl.style.display='none', 1600);
+  }
+  function addToCart(name){ toast(`${name} añadido al carrito`) }
+
+  // Form → WhatsApp
+  function sendLead(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const product = document.getElementById('product').value;
+    const msg = document.getElementById('msg').value.trim();
+    const text = encodeURIComponent(
+      `Hola, soy ${name}.` +
+      (phone?` Tel: ${phone}.`:'') +
+      (product?` Producto de interés: ${product}.`:'') +
+      (msg?` Mensaje: ${msg}`:'')
+    );
+    window.open(`https://wa.me/525541266798?text=${text}`, '_blank');
+    toast('Solicitud enviada por WhatsApp');
+    return false;
+  }
+
+  // Countdown a 7 días
+  const target = new Date(Date.now() + 7*24*60*60*1000);
+  function tick(){
+    const now = new Date();
+    let s = Math.max(0, Math.floor((target-now)/1000));
+    const d = Math.floor(s/86400); s-=d*86400;
+    const h = Math.floor(s/3600); s-=h*3600;
+    const m = Math.floor(s/60); s-=m*60;
+    document.getElementById('d').textContent = d.toString();
+    document.getElementById('h').textContent = h.toString().padStart(2,'0');
+    document.getElementById('m').textContent = m.toString().padStart(2,'0');
+    document.getElementById('s').textContent = s.toString().padStart(2,'0');
+    requestAnimationFrame(()=>setTimeout(tick, 1000));
+  }
+  tick();
 </script>
 </body>
 </html>
-
-
-
-
-
-
