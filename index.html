@@ -1,470 +1,1193 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ÉDITION PRIVÉE — Polo Bear Sweaters</title>
-<meta name="description" content="Polo Bear Sweaters edición invierno. Entrega premium en CDMX. Compra sin fricción por WhatsApp." />
-<meta name="theme-color" content="#F7F1EA" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    /* —— Paleta RL-pastel de tu marca —— */
-    --cream:#F7F1EA;        /* fondo */
-    --cream-2:#FBF7F2;      /* fondo suave */
-    --pink:#F2C9D8;         /* acentos suaves */
-    --blue:#CFE3F6;         /* badges fríos */
-    --teddy:#8B6A4A;        /* marrón cálido principal */
-    --teddy-2:#6F543D;      /* hover/oscuro */
-    --gray:#9AA0A6;         /* texto secundario */
-    --ink:#1B1A19;          /* texto principal */
+export function loadRecord(): ClinicalRecord | null { try { const raw = localStorage.getItem(KEY); if (!raw) return null; return JSON.parse(raw) as ClinicalRecord; } catch { return null; } } export function saveRecord(data: ClinicalRecord) { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch { // ignore } } export function clearRecord() { try { localStorage.removeItem(KEY); } catch { // ignore } } export function exportRecordJson(data: ClinicalRecord) { const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = "clindoc_expediente.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); } export async function importRecordJsonFile(file: File): Promise<ClinicalRecord | null> { try { const text = await file.text(); const parsed = JSON.parse(text) as ClinicalRecord; return parsed; } catch { return null; } } 3.4 src/lib/templates.ts export const neuroTemplateEN = EN: FM: Despierto, alerta, orientado, habla y lenguaje y sin alteraciones. Resto de funciones mentales sin alteraciones. Nervios del craneo: AV 20/20 corregido AO, Fondo de ojo sin papiledema. Mirada primaria central, sin limitación a las ducciones o versiones. Sensibilidad conservada en las 3 ramas. Simetria facial en reposo y la gesticulacion. Resto de NC sin alteraciones. Motor: fuerza 5/5 generalizada, REMs ++, Respuesta plantar flexora bilateral. Sensibilidad exteroceptiva (superficial) y propioceptiva (profunda): sin alteraciones. Cerebelo sin dismetria ni disdiadococinesia Marcha: Sin alteraciones, Ataxica, Pato, festinante, espástica, psicógena, estepaje. Atavicos: PM, glabelar, búsqueda o prensión: ausentes Meningeos: Brudsinsky, kerning o rigidiz de nuca: ausentes. ; export const neuroTemplatePlan = Plan: Datos de alarma Cita subsecuente RMN/TC de encéfalo simple y contrastada Iniciar Rehabilitación. ; export const reumaTemplate = Motivo de consulta: Edad: Residencia: Religión: Alergias: teléfono: Ocupación: Estado civil: Originario: Escolaridad: Referido por : AHF: AR: LES: PSORIASIS: GOTA: DM: HAS: CA : APNP: tabaquismo, alcoholismo y toxicomanías: negadas, vacunacion reciente: perdida peso: APP: Cronicodegenerat: Suplementos: Cirugías: Trasfusiones: Traumatismos y fracturas PA: fecha inicio : agudo : - 6 sem cronico + 6 sem : Subito : EVA: RAM: CF: caida pelo: Raynaud: xerostomia: xeroftalmia: fiebre: fatiga: insomnio: ulceras orales: lesiones en piel- eritema malar: fotosensibilidad: lumbalgia: Dolor en : Inflamación en : inflamatorio (mejora con movimiento- empeora en reposo ): tratamiento previo: mecanico (empeora con el uso) : debilidad muscular : puntos gatillo : EF: FM: Despierto, alerta, orientado , habla y lenguaje y sin alteraciones. Resto de funciones mentales sin alteraciones. Sensibilidad conservada , Simetria facial en reposo NORMAL Motor: fuerza 5/5 generalizada, REMs ++, Marcha: Sin alteraciones -AD: -AI: Diagnostico: Plan: Tx : Datos de alarma Cita subsecuente 1 MES RX ZONA AFECTADA , laboratoriales Iniciar Rehabilitación. Pronostico bueno para la vida y la función. ; 3.5 src/lib/pdf/NotePdf.tsx (PDF Carta + márgenes + tablas) import React from "react"; import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"; import type { ClinicalRecord } from "@/lib/types"; const palette = { primary: "#0B5FA5", primaryDark: "#084A82", light: "#E6F2FF", border: "#D6E6F7", text: "#0F172A", }; const styles = StyleSheet.create({ page: { paddingTop: 56, // ~2 cm paddingBottom: 56, paddingLeft: 56, paddingRight: 56, fontSize: 10.5, color: palette.text, fontFamily: "Helvetica", }, header: { marginBottom: 14 }, h1: { fontSize: 16, color: palette.primary, fontWeight: 700 }, sub: { fontSize: 10, marginTop: 4, color: "#334155" }, card: { borderWidth: 1, borderColor: palette.border, borderRadius: 10, padding: 10, marginTop: 10, }, title: { fontSize: 12, color: palette.primary, fontWeight: 700, marginBottom: 6 }, label: { fontSize: 9, color: palette.primaryDark, fontWeight: 700 }, value: { fontSize: 10.5, marginTop: 2, whiteSpace: "pre-wrap" as any }, table: { borderWidth: 1, borderColor: palette.border, borderRadius: 10, overflow: "hidden", marginTop: 8 }, trHead: { flexDirection: "row", backgroundColor: palette.light, borderBottomWidth: 1, borderBottomColor: palette.border }, tr: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: palette.border }, th: { padding: 6, fontSize: 9, fontWeight: 700, color: palette.primaryDark }, td: { padding: 6, fontSize: 9.8 }, col: (w: number) => ({ width: ${w}% }), hr: { height: 1, backgroundColor: palette.border, marginTop: 14, marginBottom: 10 }, signLine: { marginTop: 18, borderTopWidth: 1, borderTopColor: palette.border, width: 220 }, signText: { fontSize: 9, marginTop: 6, color: "#334155" }, }); function fmt(v: string) { const t = (v || "").trim(); return t ? t : "—"; } function blockIfAny(label: string, value: string) { const t = (value || "").trim(); if (!t) return null; return ( <View style={{ marginTop: 8 }}> <Text style={styles.label}>{label}</Text> <Text style={styles.value}>{t}</Text> </View> ); } export function NotePdf({ data }: { data: ClinicalRecord }) { const dt = new Date().toLocaleString("es-MX"); const hasAntecedentes = Object.values(data.antecedentes).some((v) => (v || "").trim().length > 0); const hasExploracion = (data.exploracionNeurologica.EN || "").trim() || (data.exploracionNeurologica.plan || "").trim() || (data.exploracionReumatologica.textoBase || "").trim(); return ( <Document> <Page size="LETTER" style={styles.page}> <View style={styles.header}> <Text style={styles.h1}>Nota médica — ClinDoc</Text> <Text style={styles.sub}>Fecha y hora: {dt}</Text> <Text style={styles.sub}> Médico: {fmt(data.doctor.nombre)} · Cédula: {fmt(data.doctor.cedula)} {data.doctor.especialidad?.trim() ? · ${data.doctor.especialidad} : ""} </Text> </View> <View style={styles.card}> <Text style={styles.title}>Datos del paciente</Text> <View style={styles.table}> <View style={styles.trHead}> <Text style={[styles.th, styles.col(30)]}>Campo</Text> <Text style={[styles.th, styles.col(70)]}>Valor</Text> </View> {[ ["Nombre", data.paciente.nombre], ["Edad", data.paciente.edad], ["Sexo", data.paciente.sexo], ["Teléfono", data.paciente.telefono], ["Residencia", data.paciente.residencia], ["Ocupación", data.paciente.ocupacion], ["Estado civil", data.paciente.estadoCivil], ["Escolaridad", data.paciente.escolaridad], ["Origen", data.paciente.origen], ["Religión", data.paciente.religion], ["Alergias", data.paciente.alergias], ["Lateralidad manual", data.paciente.lateralidadManual], ["Hemotipo", data.paciente.hemotipo], ].map(([k, v]) => ( <View style={styles.tr} key={k}> <Text style={[styles.td, styles.col(30)]}>{k}</Text> <Text style={[styles.td, styles.col(70)]}>{fmt(String(v || ""))}</Text> </View> ))} </View> </View> <View style={styles.card}> <Text style={styles.title}>Motivo de consulta</Text> <Text style={styles.value}>{fmt(data.motivoConsulta)}</Text> {blockIfAny("Padecimiento actual / Historia", data.historia)} </View> {hasAntecedentes ? ( <View style={styles.card}> <Text style={styles.title}>Antecedentes</Text> {blockIfAny("AHF", data.antecedentes.AHF)} {blockIfAny("APNP", data.antecedentes.APNP)} {blockIfAny("APP", data.antecedentes.APP)} {blockIfAny("FRN", data.antecedentes.FRN)} {blockIfAny("Crónico-degenerativos", data.antecedentes.cronicoDegenerativos)} {blockIfAny("Suplementos", data.antecedentes.suplementos)} {blockIfAny("Cirugías", data.antecedentes.cirugias)} {blockIfAny("Transfusiones", data.antecedentes.transfusiones)} {blockIfAny("Trauma", data.antecedentes.trauma)} {blockIfAny("Vacunación reciente", data.antecedentes.vacunacionReciente)} {blockIfAny("Pérdida de peso", data.antecedentes.perdidaPeso)} </View> ) : null} {hasExploracion ? ( <View style={styles.card}> <Text style={styles.title}>Exploración física</Text> {blockIfAny("Neurología (EN)", data.exploracionNeurologica.EN)} {blockIfAny("Plan Neurología", data.exploracionNeurologica.plan)} {blockIfAny("Reumatología", data.exploracionReumatologica.textoBase)} </View> ) : null} {blockIfAny("Paraclínicos", data.paraclinicos)} {blockIfAny("Diagnóstico", data.diagnostico)} {blockIfAny("Plan / Tratamiento", data.planTx)} <View style={styles.hr} /> <View> <View style={styles.signLine} /> <Text style={styles.signText}>Firma y nombre del médico: {fmt(data.doctor.nombre)}</Text> </View> </Page> </Document> ); } 3.6 src/app/page.tsx (UI completa + tabs + preview + PDF + plantillas + export/import) Este es el reemplazo “Vercel-ready”. Ya NO usa ngrok, ni python. Todo es client-side. "use client"; import React, { useEffect, useMemo, useRef, useState } from "react"; import { PDFViewer, pdf } from "@react-pdf/renderer"; import { NotePdf } from "@/lib/pdf/NotePdf"; import { emptyRecord, type ClinicalRecord } from "@/lib/types"; import { loadRecord, saveRecord, clearRecord, exportRecordJson, importRecordJsonFile, } from "@/lib/storage"; import { neuroTemplateEN, neuroTemplatePlan, reumaTemplate } from "@/lib/templates"; const colors = { primary: "#0B5FA5", primaryDark: "#084A82", accent: "#1E88E5", light: "#E6F2FF", border: "#D6E6F7", text: "#0F172A", }; type TabKey = | "paciente" | "antecedentes" | "motivo" | "exploracion" | "paraclinicos" | "diagnostico" | "plan" | "preview"; function cls(...xs: Array<string | false | null | undefined>) { return xs.filter(Boolean).join(" "); } function Field({ label, value, onChange, placeholder, required, type = "text", }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; required?: boolean; type?: string; }) { return ( <label className="block"> <div className="mb-1 text-sm font-medium text-slate-900"> {label} {required ? <span style={{ color: colors.primary }}>*</span> : null} </div> <input type={type} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} className="w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2" style={{ borderColor: colors.border }} /> </label> ); } function TextArea({ label, value, onChange, placeholder, rows = 6, }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; rows?: number; }) { return ( <label className="block"> <div className="mb-1 text-sm font-medium text-slate-900">{label}</div> <textarea value={value} placeholder={placeholder} rows={rows} onChange={(e) => onChange(e.target.value)} className="w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2" style={{ borderColor: colors.border }} /> </label> ); } function Select({ label, value, onChange, options, }: { label: string; value: string; onChange: (v: string) => void; options: string[]; }) { return ( <label className="block"> <div className="mb-1 text-sm font-medium text-slate-900">{label}</div> <select value={value} onChange={(e) => onChange(e.target.value)} className="w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 bg-white" style={{ borderColor: colors.border }} > <option value="">—</option> {options.map((o) => ( <option key={o} value={o}> {o} </option> ))} </select> </label> ); } function SectionCard({ title, subtitle, children, }: { title: string; subtitle?: string; children: React.ReactNode; }) { return ( <div className="rounded-2xl border bg-white p-5 shadow-sm" style={{ borderColor: colors.border }}> <div className="mb-4"> <div className="text-base font-semibold" style={{ color: colors.primary }}> {title} </div> {subtitle ? <div className="text-sm text-slate-600">{subtitle}</div> : null} </div> {children} </div> ); } export default function Page() { const [tab, setTab] = useState<TabKey>("paciente"); const [record, setRecord] = useState<ClinicalRecord>(emptyRecord); const fileRef = useRef<HTMLInputElement | null>(null); // load from localStorage useEffect(() => { const saved = loadRecord(); if (saved) setRecord(saved); }, []); // save to localStorage useEffect(() => { saveRecord(record); }, [record]); const missingRequired = useMemo(() => { const req = [ record.doctor.nombre?.trim(), record.doctor.cedula?.trim(), record.paciente.nombre?.trim(), record.paciente.edad?.trim(), record.motivoConsulta?.trim(), ]; return req.some((x) => !x); }, [record]); async function downloadPdf() { const doc = <NotePdf data={record} />; const blob = await pdf(doc).toBlob(); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = ClinDoc_${(record.paciente.nombre || "Paciente").replaceAll(" ", "_")}.pdf; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); } function applyNeuroTemplate() { setRecord((prev) => ({ ...prev, exploracionNeurologica: { ...prev.exploracionNeurologica, EN: prev.exploracionNeurologica.EN?.trim() ? prev.exploracionNeurologica.EN : neuroTemplateEN, plan: prev.exploracionNeurologica.plan?.trim() ? prev.exploracionNeurologica.plan : neuroTemplatePlan, }, })); } function applyReumaTemplate() { setRecord((prev) => ({ ...prev, exploracionReumatologica: { ...prev.exploracionReumatologica, textoBase: prev.exploracionReumatologica.textoBase?.trim() ? prev.exploracionReumatologica.textoBase : reumaTemplate, }, })); } function doClear() { clearRecord(); setRecord(emptyRecord); setTab("paciente"); } function doExportJson() { exportRecordJson(record); } async function doImportJson(file: File) { const parsed = await importRecordJsonFile(file); if (!parsed) { alert("No se pudo importar. Verifica que sea un JSON válido de ClinDoc."); return; } setRecord(parsed); setTab("paciente"); } const tabs: Array<{ key: TabKey; label: string }> = [ { key: "paciente", label: "A) Paciente" }, { key: "antecedentes", label: "B) Antecedentes" }, { key: "motivo", label: "C) Motivo e Historia" }, { key: "exploracion", label: "D) Exploración" }, { key: "paraclinicos", label: "E) Paraclínicos" }, { key: "diagnostico", label: "F) Diagnóstico" }, { key: "plan", label: "G) Plan/Tx" }, { key: "preview", label: "H) Vista previa" }, ]; return ( <div className="min-h-screen" style={{ background: "#F8FAFC" }}> {/* Top bar */} <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur"> <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3"> <div className="flex items-center gap-3"> <div className="h-10 w-10 rounded-2xl flex items-center justify-center font-bold text-white" style={{ background: colors.primary }} > C </div> <div> <div className="text-base font-semibold" style={{ color: colors.text }}> ClinDoc </div> <div className="text-xs text-slate-600">Expediente clínico → PDF tipo hospital</div> </div> </div> <div className="flex items-center gap-2"> <button onClick={() => setTab("preview")} className="rounded-xl border px-3 py-2 text-sm font-medium" style={{ borderColor: colors.border, color: colors.primaryDark }} > Vista previa </button> <button onClick={downloadPdf} disabled={missingRequired} className={cls( "rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-sm", missingRequired && "opacity-50 cursor-not-allowed" )} style={{ background: colors.primary }} title={missingRequired ? "Completa Doctor + Cédula + Paciente + Edad + Motivo" : "Generar PDF"} > Generar PDF </button> <button onClick={doClear} className="rounded-xl border px-3 py-2 text-sm font-medium text-slate-700" style={{ borderColor: colors.border }} > Limpiar </button> <button onClick={doExportJson} className="rounded-xl border px-3 py-2 text-sm font-medium text-slate-700" style={{ borderColor: colors.border }} > Exportar JSON </button> <button onClick={() => fileRef.current?.click()} className="rounded-xl border px-3 py-2 text-sm font-medium text-slate-700" style={{ borderColor: colors.border }} > Importar JSON </button> <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void doImportJson(f); e.currentTarget.value = ""; }} /> </div> </div> </header> {/* Body */} <div className="mx-auto grid max-w-6xl grid-cols-12 gap-4 px-4 py-6"> {/* Sidebar tabs */} <aside className="col-span-12 md:col-span-4 lg:col-span-3"> <div className="rounded-2xl border bg-white p-2 shadow-sm" style={{ borderColor: colors.border }}> {tabs.map((t) => { const active = tab === t.key; return ( <button key={t.key} onClick={() => setTab(t.key)} className={cls( "w-full rounded-xl px-3 py-2 text-left text-sm font-medium transition", active ? "text-white" : "text-slate-700 hover:bg-slate-50" )} style={{ background: active ? colors.primary : "transparent" }} > {t.label} </button> ); })} </div> <div className="mt-4 rounded-2xl border bg-white p-4 text-sm text-slate-700 shadow-sm" style={{ borderColor: colors.border }}> <div className="font-semibold" style={{ color: colors.primaryDark }}> Campos obligatorios </div> <div className="mt-1 text-slate-600">Doctor, Cédula, Paciente, Edad y Motivo de consulta.</div> </div> <div className="mt-4 rounded-2xl border bg-white p-4 text-sm text-slate-700 shadow-sm" style={{ borderColor: colors.border }}> <div className="font-semibold" style={{ color: colors.primaryDark }}> Plantillas </div> <div className="mt-2 flex flex-col gap-2"> <button onClick={applyNeuroTemplate} className="rounded-xl px-3 py-2 text-sm font-semibold text-white" style={{ background: colors.accent }} > Insertar Neurología </button> <button onClick={applyReumaTemplate} className="rounded-xl px-3 py-2 text-sm font-semibold text-white" style={{ background: colors.primaryDark }} > Insertar Reumatología </button> </div> <div className="mt-2 text-xs text-slate-600"> Inserta texto base editable si el campo está vacío. </div> </div> </aside> {/* Main content */} <main className="col-span-12 md:col-span-8 lg:col-span-9 space-y-4"> {tab === "paciente" && ( <SectionCard title="Datos del paciente y del médico" subtitle="Captura rápida y clara"> <div className="grid grid-cols-1 gap-4 md:grid-cols-3"> <Field label="Doctor" required value={record.doctor.nombre} onChange={(v) => setRecord((p) => ({ ...p, doctor: { ...p.doctor, nombre: v } }))} placeholder="Nombre completo" /> <Field label="Cédula" required value={record.doctor.cedula} onChange={(v) => setRecord((p) => ({ ...p, doctor: { ...p.doctor, cedula: v } }))} placeholder="Cédula profesional" /> <Field label="Especialidad" value={record.doctor.especialidad} onChange={(v) => setRecord((p) => ({ ...p, doctor: { ...p.doctor, especialidad: v } }))} placeholder="Ej. Neurología / Reumatología" /> </div> <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-4"> <Field label="Paciente" required value={record.paciente.nombre} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, nombre: v } }))} placeholder="Nombre completo" /> <Field label="Edad" required value={record.paciente.edad} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, edad: v } }))} placeholder="Años" type="number" /> <Select label="Sexo" value={record.paciente.sexo} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, sexo: v } }))} options={["Femenino", "Masculino", "Otro"]} /> <Field label="Teléfono" value={record.paciente.telefono} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, telefono: v } }))} placeholder="(opcional)" /> </div> <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3"> <Field label="Residencia" value={record.paciente.residencia} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, residencia: v } }))} /> <Field label="Ocupación" value={record.paciente.ocupacion} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, ocupacion: v } }))} /> <Field label="Estado civil" value={record.paciente.estadoCivil} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, estadoCivil: v } }))} /> </div> <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3"> <Field label="Escolaridad" value={record.paciente.escolaridad} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, escolaridad: v } }))} /> <Field label="Origen" value={record.paciente.origen} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, origen: v } }))} /> <Field label="Religión" value={record.paciente.religion} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, religion: v } }))} /> </div> <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2"> <Field label="Alergias" value={record.paciente.alergias} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, alergias: v } }))} /> <div className="grid grid-cols-2 gap-4"> <Field label="Lateralidad manual" value={record.paciente.lateralidadManual} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, lateralidadManual: v } }))} /> <Field label="Hemotipo" value={record.paciente.hemotipo} onChange={(v) => setRecord((p) => ({ ...p, paciente: { ...p.paciente, hemotipo: v } }))} /> </div> </div> </SectionCard> )} {tab === "antecedentes" && ( <SectionCard title="Antecedentes" subtitle="Carga rápida (texto libre)"> <div className="grid grid-cols-1 gap-4 md:grid-cols-2"> <TextArea label="AHF" value={record.antecedentes.AHF} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, AHF: v } }))} rows={5} /> <TextArea label="APNP" value={record.antecedentes.APNP} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, APNP: v } }))} rows={5} /> <TextArea label="APP" value={record.antecedentes.APP} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, APP: v } }))} rows={5} /> <TextArea label="FRN" value={record.antecedentes.FRN} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, FRN: v } }))} rows={5} /> </div> <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3"> <Field label="Vacunación reciente" value={record.antecedentes.vacunacionReciente} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, vacunacionReciente: v } }))} /> <Field label="Pérdida de peso" value={record.antecedentes.perdidaPeso} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, perdidaPeso: v } }))} /> <Field label="Crónico-degenerativos" value={record.antecedentes.cronicoDegenerativos} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, cronicoDegenerativos: v } }))} /> </div> <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3"> <Field label="Suplementos" value={record.antecedentes.suplementos} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, suplementos: v } }))} /> <Field label="Cirugías" value={record.antecedentes.cirugias} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, cirugias: v } }))} /> <Field label="Transfusiones" value={record.antecedentes.transfusiones} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, transfusiones: v } }))} /> </div> <div className="mt-4"> <Field label="Trauma" value={record.antecedentes.trauma} onChange={(v) => setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, trauma: v } }))} /> </div> </SectionCard> )} {tab === "motivo" && ( <SectionCard title="Motivo de consulta e historia" subtitle="Aquí va lo principal"> <TextArea label="Motivo de consulta *" value={record.motivoConsulta} onChange={(v) => setRecord((p) => ({ ...p, motivoConsulta: v }))} rows={4} /> <div className="mt-4"> <TextArea label="Padecimiento actual / Historia" value={record.historia} onChange={(v) => setRecord((p) => ({ ...p, historia: v }))} rows={8} /> </div> </SectionCard> )} {tab === "exploracion" && ( <SectionCard title="Exploración física" subtitle="Neurología + Reumatología (plantillas opcionales)"> <div className="grid grid-cols-1 gap-4 md:grid-cols-2"> <TextArea label="Exploración Neurológica (EN)" value={record.exploracionNeurologica.EN} onChange={(v) => setRecord((p) => ({ ...p, exploracionNeurologica: { ...p.exploracionNeurologica, EN: v } })) } rows={14} /> <TextArea label="Plan Neurología (texto)" value={record.exploracionNeurologica.plan} onChange={(v) => setRecord((p) => ({ ...p, exploracionNeurologica: { ...p.exploracionNeurologica, plan: v } })) } rows={14} /> </div> <div className="mt-4"> <TextArea label="Exploración Reumatología (texto base)" value={record.exploracionReumatologica.textoBase} onChange={(v) => setRecord((p) => ({ ...p, exploracionReumatologica: { ...p.exploracionReumatologica, textoBase: v }, })) } rows={16} /> </div> </SectionCard> )} {tab === "paraclinicos" && ( <SectionCard title="Paraclínicos" subtitle="Laboratorios, imagen, etc."> <TextArea label="Paraclínicos" value={record.paraclinicos} onChange={(v) => setRecord((p) => ({ ...p, paraclinicos: v }))} rows={10} /> </SectionCard> )} {tab === "diagnostico" && ( <SectionCard title="Diagnóstico" subtitle="Diagnóstico clínico / diferencial"> <TextArea label="Diagnóstico" value={record.diagnostico} onChange={(v) => setRecord((p) => ({ ...p, diagnostico: v }))} rows={10} /> </SectionCard> )} {tab === "plan" && ( <SectionCard title="Plan / Tratamiento" subtitle="Indicaciones y seguimiento"> <TextArea label="Plan / Tx" value={record.planTx} onChange={(v) => setRecord((p) => ({ ...p, planTx: v }))} rows={12} /> </SectionCard> )} {tab === "preview" && ( <SectionCard title="Vista previa" subtitle="Así se verá el PDF"> <div className="rounded-2xl border overflow-hidden" style={{ borderColor: colors.border }}> <div className="h-[80vh] w-full bg-white"> <PDFViewer width="100%" height="100%"> <NotePdf data={record} /> </PDFViewer> </div> </div> <div className="mt-3 text-sm text-slate-600"> Si un campo está vacío, el PDF lo oculta (bloques) o usa “—” en la tabla. </div> </SectionCard> )} </main> </div> </div> ); } 4) Probar localmente npm run dev Abre: http://localhost:3000 5) Subir a GitHub git init git add . git commit -m "ClinDoc MVP: expediente clínico + PDF" git branch -M main # crea un repo en GitHub (ej: clindoc) y luego: git remote add origin https://github.com/TU_USUARIO/clindoc.git git push -u origin main 6) Deploy en Vercel (sin ngrok) Entra a Vercel → New Project Importa tu repo clindoc Framework: Next.js (lo detecta solo) Deploy Listo: te da URL pública, y queda 24/7. Nota de seguridad importantísima En lo que pegaste aparece tu token de ngrok. entregame el codigo completo para ponerlo en un texto o algo todo todo
 
-    /* Compat con tu CSS original */
-    --bg: var(--cream);
-    --bg-soft: var(--cream-2);
-    --card:#ffffff;
-    --muted: var(--gray);
-    --text: var(--ink);
-    --brand: var(--teddy);
-    --brand-2: var(--teddy-2);
-    --max:1200px;
-    --radius:18px;
-    --shadow:0 10px 30px rgba(0,0,0,.10);
-    --border:1px solid rgba(0,0,0,.08);
+import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "ClinDoc",
+  description: "Expediente clínico → PDF tipo hospital",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="es">
+      <body className={inter.className}>{children}</body>
+    </html>
+  );
+}
+
+import type { ClinicalRecord } from "./types";
+
+const KEY = "clindoc_record_v1";
+
+export function loadRecord(): ClinicalRecord | null {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as ClinicalRecord;
+  } catch {
+    return null;
   }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{
-    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-    color:var(--text); background:linear-gradient(180deg,var(--cream),var(--cream-2));
-    line-height:1.55;
+}
+
+export function saveRecord(data: ClinicalRecord) {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(data));
+  } catch {
+    // ignore
   }
-  a{color:inherit}
-  .container{max-width:var(--max); margin:0 auto; padding:0 20px}
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
-    padding:.9rem 1.2rem; border-radius:9999px; font-weight:700;
-    border:1px solid var(--brand); cursor:pointer; text-decoration:none; transition:.2s ease;
-    background:var(--brand); color:#fff;
+}
+
+export function clearRecord() {
+  try {
+    localStorage.removeItem(KEY);
+  } catch {
+    // ignore
   }
-  .btn:hover{background:var(--brand-2); border-color:var(--brand-2)}
-  .btn-ghost{background:transparent; color:var(--brand)}
-  .btn-ghost:hover{background:#fff}
+}
 
-  /* NAV */
-  .nav{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
-    background:rgba(255,255,255,.75); border-bottom:var(--border)}
-  .nav__inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
-  .brand{display:flex; align-items:center; gap:10px; font-family:"Playfair Display",serif; letter-spacing:.04em; font-weight:700; font-size:20px}
-  .brand img{width:40px; height:40px; object-fit:contain} /* 👉 tu logo */
-  .menu{display:flex; gap:26px; align-items:center}
-  .menu a{color:#3b3b3b; text-decoration:none; font-weight:600}
-  .menu a:hover{color:var(--brand)}
-  .burger{display:none}
+export function exportRecordJson(data: ClinicalRecord) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "clindoc_expediente.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
 
-  /* HERO */
-  .hero{position:relative; overflow:hidden; border-bottom:var(--border)}
-  .hero::after{ /* nieve sutil navideña */
-    content:""; position:absolute; inset:0; pointer-events:none;
-    background-image:
-      radial-gradient(2px 2px at 20% 10%, rgba(255,255,255,.7) 50%, transparent 51%),
-      radial-gradient(2px 2px at 80% 30%, rgba(255,255,255,.6) 50%, transparent 51%),
-      radial-gradient(2px 2px at 50% 60%, rgba(255,255,255,.65) 50%, transparent 51%);
-    animation:snow 18s linear infinite;
+export async function importRecordJsonFile(file: File): Promise<ClinicalRecord | null> {
+  try {
+    const text = await file.text();
+    const parsed = JSON.parse(text) as ClinicalRecord;
+    return parsed;
+  } catch {
+    return null;
   }
-  @keyframes snow{to{background-position:0 120vh}}
-  .hero__inner{min-height:64vh; display:grid; gap:28px; align-items:center; grid-template-columns:1.1fr .9fr}
-  .h1{font-family:"Playfair Display",serif; font-size: clamp(36px, 6vw, 68px); line-height:1.05; margin:0 0 12px}
-  .sub{color:#4f4f4f; font-size:clamp(16px,2vw,22px); margin:0 0 22px}
-  .hero__media{display:grid; place-items:center}
-  .hero__media img{width:100%; max-width:420px; filter:drop-shadow(0 10px 22px rgba(0,0,0,.12))} /* 👉 logo grande en hero */
+}
 
-  /* SECTION TITLES */
-  .section{padding:72px 0; background:transparent}
-  .section.alt{background:var(--bg-soft)}
-  .title{font-family:"Playfair Display",serif; font-size:clamp(28px,4vw,48px); margin:0 0 8px}
-  .under{width:90px; height:4px; background:var(--brand); border-radius:6px; margin:14px 0 26px}
 
-  /* PRODUCT GRID */
-  .grid{display:grid; gap:24px}
-  @media (min-width:900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
-  @media (min-width:640px) and (max-width:899.9px){ .grid.cols-3{grid-template-columns:repeat(2,1fr)} }
-  @media (max-width:639.9px){ .grid.cols-3{grid-template-columns:1fr} .hero__inner{grid-template-columns:1fr} }
+export const neuroTemplateEN = `EN:
 
-  .card{background:var(--card); border:var(--border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}
-  .card__media{position:relative}
-  .card__media img{display:block; width:100%; height:300px; object-fit:cover}
-  .badge{
-    position:absolute; top:14px; left:14px; background:var(--blue); color:#113;
-    border:1px solid rgba(0,0,0,.08); padding:.35rem .6rem; border-radius:10px; font-size:.82rem; font-weight:800;
-  }
-  .card__body{padding:16px 16px 18px}
-  .card__title{margin:0 0 6px; font-weight:800; font-size:1.1rem}
-  .muted{color:var(--muted); margin:0 0 10px}
-  .price{font-weight:900; color:var(--brand); margin-top:2px}
+FM: Despierto, alerta, orientado, habla y lenguaje y sin alteraciones.
+Resto de funciones mentales sin alteraciones.
 
-  /* LIMITED / INFO */
-  .counter{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:22px 0 32px; background:#fff; border:var(--border); border-radius:14px; padding:16px 18px}
-  .counter .box{text-align:center}
-  .counter .num{font-size:1.8rem; font-weight:800}
-  .counter .lbl{color:var(--muted); font-size:.85rem}
+Nervios del craneo: AV 20/20 corregido AO, Fondo de ojo sin papiledema.
+Mirada primaria central, sin limitación a las ducciones o versiones.
+Sensibilidad conservada en las 3 ramas. Simetria facial en reposo y la gesticulacion. Resto de NC sin alteraciones.
 
-  .features{display:grid; gap:18px}
-  .feature{display:flex; gap:14px; align-items:center; background:#fff; border:var(--border); border-radius:16px; padding:16px 18px}
-  .dot{width:38px; height:38px; border-radius:10px; display:grid; place-items:center}
-  .dot.wapp{background:#25D36622; color:#25D366; border:1px solid #25D36655}
-  .dot.pay{background:#f6c34322; color:#f6c343; border:1px solid #f6c34355}
-  .dot.ship{background:#8dd1ff22; color:#8dd1ff; border:1px solid #8dd1ff55}
+Motor: fuerza 5/5 generalizada, REMs ++, Respuesta plantar flexora bilateral.
 
-  .form{background:#fff; border:var(--border); border-radius:16px; padding:18px; box-shadow:var(--shadow)}
-  .form h3{margin:0 0 12px}
-  .input,.select,.textarea{width:100%; background:#fff; color:var(--text); border:1px solid rgba(0,0,0,.12); border-radius:12px; padding:12px 14px; outline:none; transition:.2s ease; font:inherit}
-  .input:focus,.select:focus,.textarea:focus{border-color:var(--brand)}
-  .textarea{min-height:120px; resize:vertical}
+Sensibilidad exteroceptiva (superficial) y propioceptiva (profunda): sin alteraciones.
 
-  .two{display:grid; gap:20px}
-  @media (min-width:980px){ .two{grid-template-columns:1fr 1fr} }
+Cerebelo sin dismetria ni disdiadococinesia
 
-  .t-grid{display:grid; gap:20px}
-  @media (min-width:980px){ .t-grid{grid-template-columns:repeat(3,1fr)} }
-  .t{background:#fff; border:var(--border); border-radius:16px; padding:18px}
+Marcha: Sin alteraciones, Ataxica, Pato, festinante, espástica, psicógena, estepaje.
 
-  .footer{border-top:var(--border); background:#fff}
-  .footer__inner{padding:22px 0; color:#4a4a4a; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
-  .float{position:fixed; right:18px; bottom:18px; z-index:60; background:var(--pink); border:1px solid rgba(0,0,0,.08); border-radius:9999px; box-shadow:var(--shadow)}
-  .float a{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; color:#111; font-weight:800; text-decoration:none}
-  .pill{background:#25D366; color:#111; padding:4px 8px; border-radius:9999px; font-size:.78rem; font-weight:800}
-  .toast{position:fixed; left:50%; transform:translateX(-50%); bottom:24px; z-index:70; background:#111; border:1px solid rgba(255,255,255,.08); color:#fff; padding:10px 14px; border-radius:12px; box-shadow:var(--shadow); display:none}
-  .center{display:flex; align-items:center; justify-content:center}
-  .lead{color:#4f4f4f; max-width:840px}
-</style>
-</head>
-<body>
+Atavicos: PM, glabelar, búsqueda o prensión: ausentes
 
-<!-- NAV -->
-<header class="nav">
-  <div class="container nav__inner">
-    <div class="brand">
-      <img src="assets/logo-bear.png" alt="ÉDITION PRIVÉE" /> <!-- 👉 cambia la ruta si tu logo tiene otro nombre -->
-      <span id="brand">ÉDITION PRIVÉE</span>
+Meningeos: Brudsinsky, kerning o rigidiz de nuca: ausentes.
+`;
+
+export const neuroTemplatePlan = `Plan:
+
+Datos de alarma
+
+Cita subsecuente
+
+RMN/TC de encéfalo simple y contrastada
+
+Iniciar Rehabilitación.
+`;
+
+export const reumaTemplate = `Motivo de consulta:
+Edad:
+Residencia:
+Religión:
+Alergias:
+teléfono:
+Ocupación:
+Estado civil:
+Originario:
+Escolaridad:
+Referido por :
+
+AHF: AR: LES: PSORIASIS: GOTA: DM: HAS: CA :
+APNP: tabaquismo, alcoholismo y toxicomanías: negadas,
+vacunacion reciente:
+perdida peso:
+
+APP:
+Cronicodegenerat:
+Suplementos:
+Cirugías:
+Trasfusiones:
+Traumatismos y fracturas
+
+PA: fecha inicio :
+agudo : - 6 sem
+cronico + 6 sem :
+Subito :
+EVA:
+RAM:
+CF:
+
+caida pelo:
+Raynaud:
+xerostomia:
+xeroftalmia:
+fiebre:
+fatiga:
+insomnio:
+ulceras orales:
+lesiones en piel- eritema malar:
+fotosensibilidad:
+lumbalgia:
+
+Dolor en :
+Inflamación en :
+inflamatorio (mejora con movimiento- empeora en reposo ):
+tratamiento previo:
+mecanico (empeora con el uso) :
+debilidad muscular :
+puntos gatillo :
+
+EF:
+
+FM: Despierto, alerta, orientado , habla y lenguaje y sin alteraciones. Resto de funciones mentales sin alteraciones.
+
+Sensibilidad conservada , Simetria facial en reposo NORMAL
+
+Motor: fuerza 5/5 generalizada, REMs ++,
+
+Marcha: Sin alteraciones
+-AD:
+-AI:
+
+Diagnostico:
+
+Plan: Tx :
+
+Datos de alarma
+
+Cita subsecuente 1 MES
+
+RX ZONA AFECTADA , laboratoriales
+
+Iniciar Rehabilitación.
+
+Pronostico bueno para la vida y la función.
+`;
+
+import React from "react";
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import type { ClinicalRecord } from "@/lib/types";
+
+const palette = {
+  primary: "#0B5FA5",
+  primaryDark: "#084A82",
+  light: "#E6F2FF",
+  border: "#D6E6F7",
+  text: "#0F172A",
+};
+
+const styles = StyleSheet.create({
+  page: {
+    paddingTop: 56, // ~2 cm
+    paddingBottom: 56,
+    paddingLeft: 56,
+    paddingRight: 56,
+    fontSize: 10.5,
+    color: palette.text,
+    fontFamily: "Helvetica",
+  },
+  header: { marginBottom: 14 },
+  h1: { fontSize: 16, color: palette.primary, fontWeight: 700 },
+  sub: { fontSize: 10, marginTop: 4, color: "#334155" },
+
+  card: {
+    borderWidth: 1,
+    borderColor: palette.border,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 10,
+  },
+  title: { fontSize: 12, color: palette.primary, fontWeight: 700, marginBottom: 6 },
+  label: { fontSize: 9, color: palette.primaryDark, fontWeight: 700 },
+  value: { fontSize: 10.5, marginTop: 2, whiteSpace: "pre-wrap" as any },
+
+  table: {
+    borderWidth: 1,
+    borderColor: palette.border,
+    borderRadius: 10,
+    overflow: "hidden",
+    marginTop: 8,
+  },
+  trHead: {
+    flexDirection: "row",
+    backgroundColor: palette.light,
+    borderBottomWidth: 1,
+    borderBottomColor: palette.border,
+  },
+  tr: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: palette.border },
+  th: { padding: 6, fontSize: 9, fontWeight: 700, color: palette.primaryDark },
+  td: { padding: 6, fontSize: 9.8 },
+  col: (w: number) => ({ width: `${w}%` }),
+
+  hr: { height: 1, backgroundColor: palette.border, marginTop: 14, marginBottom: 10 },
+  signLine: { marginTop: 18, borderTopWidth: 1, borderTopColor: palette.border, width: 220 },
+  signText: { fontSize: 9, marginTop: 6, color: "#334155" },
+});
+
+function fmt(v: string) {
+  const t = (v || "").trim();
+  return t ? t : "—";
+}
+
+function blockIfAny(label: string, value: string) {
+  const t = (value || "").trim();
+  if (!t) return null;
+  return (
+    <View style={{ marginTop: 8 }}>
+      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.value}>{t}</Text>
+    </View>
+  );
+}
+
+export function NotePdf({ data }: { data: ClinicalRecord }) {
+  const dt = new Date().toLocaleString("es-MX");
+
+  const hasAntecedentes = Object.values(data.antecedentes).some((v) => (v || "").trim().length > 0);
+  const hasExploracion =
+    (data.exploracionNeurologica.EN || "").trim() ||
+    (data.exploracionNeurologica.plan || "").trim() ||
+    (data.exploracionReumatologica.textoBase || "").trim();
+
+  return (
+    <Document>
+      <Page size="LETTER" style={styles.page}>
+        <View style={styles.header}>
+          <Text style={styles.h1}>Nota médica — ClinDoc</Text>
+          <Text style={styles.sub}>Fecha y hora: {dt}</Text>
+          <Text style={styles.sub}>
+            Médico: {fmt(data.doctor.nombre)} · Cédula: {fmt(data.doctor.cedula)}
+            {data.doctor.especialidad?.trim() ? ` · ${data.doctor.especialidad}` : ""}
+          </Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.title}>Datos del paciente</Text>
+
+          <View style={styles.table}>
+            <View style={styles.trHead}>
+              <Text style={[styles.th, styles.col(30)]}>Campo</Text>
+              <Text style={[styles.th, styles.col(70)]}>Valor</Text>
+            </View>
+
+            {[
+              ["Nombre", data.paciente.nombre],
+              ["Edad", data.paciente.edad],
+              ["Sexo", data.paciente.sexo],
+              ["Teléfono", data.paciente.telefono],
+              ["Residencia", data.paciente.residencia],
+              ["Ocupación", data.paciente.ocupacion],
+              ["Estado civil", data.paciente.estadoCivil],
+              ["Escolaridad", data.paciente.escolaridad],
+              ["Origen", data.paciente.origen],
+              ["Religión", data.paciente.religion],
+              ["Alergias", data.paciente.alergias],
+              ["Lateralidad manual", data.paciente.lateralidadManual],
+              ["Hemotipo", data.paciente.hemotipo],
+            ].map(([k, v]) => (
+              <View style={styles.tr} key={String(k)}>
+                <Text style={[styles.td, styles.col(30)]}>{String(k)}</Text>
+                <Text style={[styles.td, styles.col(70)]}>{fmt(String(v || ""))}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.title}>Motivo de consulta</Text>
+          <Text style={styles.value}>{fmt(data.motivoConsulta)}</Text>
+          {blockIfAny("Padecimiento actual / Historia", data.historia)}
+        </View>
+
+        {hasAntecedentes ? (
+          <View style={styles.card}>
+            <Text style={styles.title}>Antecedentes</Text>
+            {blockIfAny("AHF", data.antecedentes.AHF)}
+            {blockIfAny("APNP", data.antecedentes.APNP)}
+            {blockIfAny("APP", data.antecedentes.APP)}
+            {blockIfAny("FRN", data.antecedentes.FRN)}
+            {blockIfAny("Crónico-degenerativos", data.antecedentes.cronicoDegenerativos)}
+            {blockIfAny("Suplementos", data.antecedentes.suplementos)}
+            {blockIfAny("Cirugías", data.antecedentes.cirugias)}
+            {blockIfAny("Transfusiones", data.antecedentes.transfusiones)}
+            {blockIfAny("Trauma", data.antecedentes.trauma)}
+            {blockIfAny("Vacunación reciente", data.antecedentes.vacunacionReciente)}
+            {blockIfAny("Pérdida de peso", data.antecedentes.perdidaPeso)}
+          </View>
+        ) : null}
+
+        {hasExploracion ? (
+          <View style={styles.card}>
+            <Text style={styles.title}>Exploración física</Text>
+            {blockIfAny("Neurología (EN)", data.exploracionNeurologica.EN)}
+            {blockIfAny("Plan Neurología", data.exploracionNeurologica.plan)}
+            {blockIfAny("Reumatología", data.exploracionReumatologica.textoBase)}
+          </View>
+        ) : null}
+
+        {blockIfAny("Paraclínicos", data.paraclinicos)}
+        {blockIfAny("Diagnóstico", data.diagnostico)}
+        {blockIfAny("Plan / Tratamiento", data.planTx)}
+
+        <View style={styles.hr} />
+
+        <View>
+          <View style={styles.signLine} />
+          <Text style={styles.signText}>Firma y nombre del médico: {fmt(data.doctor.nombre)}</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+}
+
+"use client";
+
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { PDFViewer, pdf } from "@react-pdf/renderer";
+import { NotePdf } from "@/lib/pdf/NotePdf";
+import { emptyRecord, type ClinicalRecord } from "@/lib/types";
+import {
+  loadRecord,
+  saveRecord,
+  clearRecord,
+  exportRecordJson,
+  importRecordJsonFile,
+} from "@/lib/storage";
+import { neuroTemplateEN, neuroTemplatePlan, reumaTemplate } from "@/lib/templates";
+
+const colors = {
+  primary: "#0B5FA5",
+  primaryDark: "#084A82",
+  accent: "#1E88E5",
+  light: "#E6F2FF",
+  border: "#D6E6F7",
+  text: "#0F172A",
+};
+
+type TabKey =
+  | "paciente"
+  | "antecedentes"
+  | "motivo"
+  | "exploracion"
+  | "paraclinicos"
+  | "diagnostico"
+  | "plan"
+  | "preview";
+
+function cls(...xs: Array<string | false | null | undefined>) {
+  return xs.filter(Boolean).join(" ");
+}
+
+function Field({
+  label,
+  value,
+  onChange,
+  placeholder,
+  required,
+  type = "text",
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  required?: boolean;
+  type?: string;
+}) {
+  return (
+    <label className="block">
+      <div className="mb-1 text-sm font-medium text-slate-900">
+        {label} {required ? <span style={{ color: colors.primary }}>*</span> : null}
+      </div>
+      <input
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2"
+        style={{ borderColor: colors.border }}
+      />
+    </label>
+  );
+}
+
+function TextArea({
+  label,
+  value,
+  onChange,
+  placeholder,
+  rows = 6,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  rows?: number;
+}) {
+  return (
+    <label className="block">
+      <div className="mb-1 text-sm font-medium text-slate-900">{label}</div>
+      <textarea
+        value={value}
+        placeholder={placeholder}
+        rows={rows}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2"
+        style={{ borderColor: colors.border }}
+      />
+    </label>
+  );
+}
+
+function Select({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+}) {
+  return (
+    <label className="block">
+      <div className="mb-1 text-sm font-medium text-slate-900">{label}</div>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 bg-white"
+        style={{ borderColor: colors.border }}
+      >
+        <option value="">—</option>
+        {options.map((o) => (
+          <option key={o} value={o}>
+            {o}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+function SectionCard({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="rounded-2xl border bg-white p-5 shadow-sm"
+      style={{ borderColor: colors.border }}
+    >
+      <div className="mb-4">
+        <div className="text-base font-semibold" style={{ color: colors.primary }}>
+          {title}
+        </div>
+        {subtitle ? <div className="text-sm text-slate-600">{subtitle}</div> : null}
+      </div>
+      {children}
     </div>
-    <nav class="menu" id="menu">
-      <a href="#coleccion">Colección</a>
-      <a href="#innovacion">Envío y Pago</a>
-      <a href="#limitadas">Ediciones Limitadas</a>
-      <a href="#testimonios">Testimonios</a>
-      <a class="btn" href="#compra">Comprar Ahora</a>
-    </nav>
-  </div>
-</header>
+  );
+}
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container hero__inner">
-    <div>
-      <h1 class="h1">Polo Bear Sweaters</h1>
-      <div class="under"></div>
-      <h2 style="margin:0 0 12px; font-family:'Playfair Display',serif; font-weight:600">Winter Icons · $3,900 MXN</h2>
-      <p class="sub">Edición invernal con toque navideño. Atención personalizada y entrega premium en CDMX.</p>
-      <div style="display:flex; gap:12px; flex-wrap:wrap">
-        <a class="btn" href="#coleccion">Ver colección</a>
-        <a class="btn-ghost" href="https://wa.me/525541266798?text=Hola,%20quiero%20ver%20tallas%20y%20disponibilidad%20de%20Polo%20Bear%20Sweaters.">WhatsApp</a>
+export default function Page() {
+  const [tab, setTab] = useState<TabKey>("paciente");
+  const [record, setRecord] = useState<ClinicalRecord>(emptyRecord);
+  const fileRef = useRef<HTMLInputElement | null>(null);
+
+  // load from localStorage
+  useEffect(() => {
+    const saved = loadRecord();
+    if (saved) setRecord(saved);
+  }, []);
+
+  // save to localStorage
+  useEffect(() => {
+    saveRecord(record);
+  }, [record]);
+
+  const missingRequired = useMemo(() => {
+    const req = [
+      record.doctor.nombre?.trim(),
+      record.doctor.cedula?.trim(),
+      record.paciente.nombre?.trim(),
+      record.paciente.edad?.trim(),
+      record.motivoConsulta?.trim(),
+    ];
+    return req.some((x) => !x);
+  }, [record]);
+
+  async function downloadPdf() {
+    const doc = <NotePdf data={record} />;
+    const blob = await pdf(doc).toBlob();
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `ClinDoc_${(record.paciente.nombre || "Paciente").replaceAll(" ", "_")}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+  }
+
+  function applyNeuroTemplate() {
+    setRecord((prev) => ({
+      ...prev,
+      exploracionNeurologica: {
+        ...prev.exploracionNeurologica,
+        EN: prev.exploracionNeurologica.EN?.trim()
+          ? prev.exploracionNeurologica.EN
+          : neuroTemplateEN,
+        plan: prev.exploracionNeurologica.plan?.trim()
+          ? prev.exploracionNeurologica.plan
+          : neuroTemplatePlan,
+      },
+    }));
+  }
+
+  function applyReumaTemplate() {
+    setRecord((prev) => ({
+      ...prev,
+      exploracionReumatologica: {
+        ...prev.exploracionReumatologica,
+        textoBase: prev.exploracionReumatologica.textoBase?.trim()
+          ? prev.exploracionReumatologica.textoBase
+          : reumaTemplate,
+      },
+    }));
+  }
+
+  function doClear() {
+    clearRecord();
+    setRecord(emptyRecord);
+    setTab("paciente");
+  }
+
+  function doExportJson() {
+    exportRecordJson(record);
+  }
+
+  async function doImportJson(file: File) {
+    const parsed = await importRecordJsonFile(file);
+    if (!parsed) {
+      alert("No se pudo importar. Verifica que sea un JSON válido de ClinDoc.");
+      return;
+    }
+    setRecord(parsed);
+    setTab("paciente");
+  }
+
+  const tabs: Array<{ key: TabKey; label: string }> = [
+    { key: "paciente", label: "A) Paciente" },
+    { key: "antecedentes", label: "B) Antecedentes" },
+    { key: "motivo", label: "C) Motivo e Historia" },
+    { key: "exploracion", label: "D) Exploración" },
+    { key: "paraclinicos", label: "E) Paraclínicos" },
+    { key: "diagnostico", label: "F) Diagnóstico" },
+    { key: "plan", label: "G) Plan/Tx" },
+    { key: "preview", label: "H) Vista previa" },
+  ];
+
+  return (
+    <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
+      {/* Top bar */}
+      <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div
+              className="h-10 w-10 rounded-2xl flex items-center justify-center font-bold text-white"
+              style={{ background: colors.primary }}
+            >
+              C
+            </div>
+            <div>
+              <div className="text-base font-semibold" style={{ color: colors.text }}>
+                ClinDoc
+              </div>
+              <div className="text-xs text-slate-600">
+                Expediente clínico → PDF tipo hospital
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setTab("preview")}
+              className="rounded-xl border px-3 py-2 text-sm font-medium"
+              style={{ borderColor: colors.border, color: colors.primaryDark }}
+            >
+              Vista previa
+            </button>
+
+            <button
+              onClick={downloadPdf}
+              disabled={missingRequired}
+              className={cls(
+                "rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-sm",
+                missingRequired && "opacity-50 cursor-not-allowed"
+              )}
+              style={{ background: colors.primary }}
+              title={
+                missingRequired
+                  ? "Completa Doctor + Cédula + Paciente + Edad + Motivo"
+                  : "Generar PDF"
+              }
+            >
+              Generar PDF
+            </button>
+
+            <button
+              onClick={doClear}
+              className="rounded-xl border px-3 py-2 text-sm font-medium text-slate-700"
+              style={{ borderColor: colors.border }}
+            >
+              Limpiar
+            </button>
+
+            <button
+              onClick={doExportJson}
+              className="rounded-xl border px-3 py-2 text-sm font-medium text-slate-700"
+              style={{ borderColor: colors.border }}
+            >
+              Exportar JSON
+            </button>
+
+            <button
+              onClick={() => fileRef.current?.click()}
+              className="rounded-xl border px-3 py-2 text-sm font-medium text-slate-700"
+              style={{ borderColor: colors.border }}
+            >
+              Importar JSON
+            </button>
+
+            <input
+              ref={fileRef}
+              type="file"
+              accept="application/json"
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void doImportJson(f);
+                e.currentTarget.value = "";
+              }}
+            />
+          </div>
+        </div>
+      </header>
+
+      {/* Body */}
+      <div className="mx-auto grid max-w-6xl grid-cols-12 gap-4 px-4 py-6">
+        {/* Sidebar tabs */}
+        <aside className="col-span-12 md:col-span-4 lg:col-span-3">
+          <div
+            className="rounded-2xl border bg-white p-2 shadow-sm"
+            style={{ borderColor: colors.border }}
+          >
+            {tabs.map((t) => {
+              const active = tab === t.key;
+              return (
+                <button
+                  key={t.key}
+                  onClick={() => setTab(t.key)}
+                  className={cls(
+                    "w-full rounded-xl px-3 py-2 text-left text-sm font-medium transition",
+                    active ? "text-white" : "text-slate-700 hover:bg-slate-50"
+                  )}
+                  style={{ background: active ? colors.primary : "transparent" }}
+                >
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div
+            className="mt-4 rounded-2xl border bg-white p-4 text-sm text-slate-700 shadow-sm"
+            style={{ borderColor: colors.border }}
+          >
+            <div className="font-semibold" style={{ color: colors.primaryDark }}>
+              Campos obligatorios
+            </div>
+            <div className="mt-1 text-slate-600">
+              Doctor, Cédula, Paciente, Edad y Motivo de consulta.
+            </div>
+          </div>
+
+          <div
+            className="mt-4 rounded-2xl border bg-white p-4 text-sm text-slate-700 shadow-sm"
+            style={{ borderColor: colors.border }}
+          >
+            <div className="font-semibold" style={{ color: colors.primaryDark }}>
+              Plantillas
+            </div>
+            <div className="mt-2 flex flex-col gap-2">
+              <button
+                onClick={applyNeuroTemplate}
+                className="rounded-xl px-3 py-2 text-sm font-semibold text-white"
+                style={{ background: colors.accent }}
+              >
+                Insertar Neurología
+              </button>
+              <button
+                onClick={applyReumaTemplate}
+                className="rounded-xl px-3 py-2 text-sm font-semibold text-white"
+                style={{ background: colors.primaryDark }}
+              >
+                Insertar Reumatología
+              </button>
+            </div>
+            <div className="mt-2 text-xs text-slate-600">
+              Inserta texto base editable si el campo está vacío.
+            </div>
+          </div>
+        </aside>
+
+        {/* Main content */}
+        <main className="col-span-12 md:col-span-8 lg:col-span-9 space-y-4">
+          {tab === "paciente" && (
+            <SectionCard
+              title="Datos del paciente y del médico"
+              subtitle="Captura rápida y clara"
+            >
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <Field
+                  label="Doctor"
+                  required
+                  value={record.doctor.nombre}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, doctor: { ...p.doctor, nombre: v } }))
+                  }
+                  placeholder="Nombre completo"
+                />
+                <Field
+                  label="Cédula"
+                  required
+                  value={record.doctor.cedula}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, doctor: { ...p.doctor, cedula: v } }))
+                  }
+                  placeholder="Cédula profesional"
+                />
+                <Field
+                  label="Especialidad"
+                  value={record.doctor.especialidad}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      doctor: { ...p.doctor, especialidad: v },
+                    }))
+                  }
+                  placeholder="Ej. Neurología / Reumatología"
+                />
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+                <Field
+                  label="Paciente"
+                  required
+                  value={record.paciente.nombre}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      paciente: { ...p.paciente, nombre: v },
+                    }))
+                  }
+                  placeholder="Nombre completo"
+                />
+                <Field
+                  label="Edad"
+                  required
+                  value={record.paciente.edad}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, paciente: { ...p.paciente, edad: v } }))
+                  }
+                  placeholder="Años"
+                  type="number"
+                />
+                <Select
+                  label="Sexo"
+                  value={record.paciente.sexo}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, paciente: { ...p.paciente, sexo: v } }))
+                  }
+                  options={["Femenino", "Masculino", "Otro"]}
+                />
+                <Field
+                  label="Teléfono"
+                  value={record.paciente.telefono}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      paciente: { ...p.paciente, telefono: v },
+                    }))
+                  }
+                  placeholder="(opcional)"
+                />
+              </div>
+
+              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <Field
+                  label="Residencia"
+                  value={record.paciente.residencia}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      paciente: { ...p.paciente, residencia: v },
+                    }))
+                  }
+                />
+                <Field
+                  label="Ocupación"
+                  value={record.paciente.ocupacion}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      paciente: { ...p.paciente, ocupacion: v },
+                    }))
+                  }
+                />
+                <Field
+                  label="Estado civil"
+                  value={record.paciente.estadoCivil}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      paciente: { ...p.paciente, estadoCivil: v },
+                    }))
+                  }
+                />
+              </div>
+
+              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <Field
+                  label="Escolaridad"
+                  value={record.paciente.escolaridad}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      paciente: { ...p.paciente, escolaridad: v },
+                    }))
+                  }
+                />
+                <Field
+                  label="Origen"
+                  value={record.paciente.origen}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, paciente: { ...p.paciente, origen: v } }))
+                  }
+                />
+                <Field
+                  label="Religión"
+                  value={record.paciente.religion}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      paciente: { ...p.paciente, religion: v },
+                    }))
+                  }
+                />
+              </div>
+
+              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                <Field
+                  label="Alergias"
+                  value={record.paciente.alergias}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      paciente: { ...p.paciente, alergias: v },
+                    }))
+                  }
+                />
+                <div className="grid grid-cols-2 gap-4">
+                  <Field
+                    label="Lateralidad manual"
+                    value={record.paciente.lateralidadManual}
+                    onChange={(v) =>
+                      setRecord((p) => ({
+                        ...p,
+                        paciente: { ...p.paciente, lateralidadManual: v },
+                      }))
+                    }
+                  />
+                  <Field
+                    label="Hemotipo"
+                    value={record.paciente.hemotipo}
+                    onChange={(v) =>
+                      setRecord((p) => ({
+                        ...p,
+                        paciente: { ...p.paciente, hemotipo: v },
+                      }))
+                    }
+                  />
+                </div>
+              </div>
+            </SectionCard>
+          )}
+
+          {tab === "antecedentes" && (
+            <SectionCard title="Antecedentes" subtitle="Carga rápida (texto libre)">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <TextArea
+                  label="AHF"
+                  value={record.antecedentes.AHF}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, AHF: v } }))
+                  }
+                  rows={5}
+                />
+                <TextArea
+                  label="APNP"
+                  value={record.antecedentes.APNP}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      antecedentes: { ...p.antecedentes, APNP: v },
+                    }))
+                  }
+                  rows={5}
+                />
+                <TextArea
+                  label="APP"
+                  value={record.antecedentes.APP}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, APP: v } }))
+                  }
+                  rows={5}
+                />
+                <TextArea
+                  label="FRN"
+                  value={record.antecedentes.FRN}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, FRN: v } }))
+                  }
+                  rows={5}
+                />
+              </div>
+
+              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <Field
+                  label="Vacunación reciente"
+                  value={record.antecedentes.vacunacionReciente}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      antecedentes: { ...p.antecedentes, vacunacionReciente: v },
+                    }))
+                  }
+                />
+                <Field
+                  label="Pérdida de peso"
+                  value={record.antecedentes.perdidaPeso}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      antecedentes: { ...p.antecedentes, perdidaPeso: v },
+                    }))
+                  }
+                />
+                <Field
+                  label="Crónico-degenerativos"
+                  value={record.antecedentes.cronicoDegenerativos}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      antecedentes: { ...p.antecedentes, cronicoDegenerativos: v },
+                    }))
+                  }
+                />
+              </div>
+
+              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <Field
+                  label="Suplementos"
+                  value={record.antecedentes.suplementos}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      antecedentes: { ...p.antecedentes, suplementos: v },
+                    }))
+                  }
+                />
+                <Field
+                  label="Cirugías"
+                  value={record.antecedentes.cirugias}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      antecedentes: { ...p.antecedentes, cirugias: v },
+                    }))
+                  }
+                />
+                <Field
+                  label="Transfusiones"
+                  value={record.antecedentes.transfusiones}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      antecedentes: { ...p.antecedentes, transfusiones: v },
+                    }))
+                  }
+                />
+              </div>
+
+              <div className="mt-4">
+                <Field
+                  label="Trauma"
+                  value={record.antecedentes.trauma}
+                  onChange={(v) =>
+                    setRecord((p) => ({ ...p, antecedentes: { ...p.antecedentes, trauma: v } }))
+                  }
+                />
+              </div>
+            </SectionCard>
+          )}
+
+          {tab === "motivo" && (
+            <SectionCard title="Motivo de consulta e historia" subtitle="Aquí va lo principal">
+              <TextArea
+                label="Motivo de consulta *"
+                value={record.motivoConsulta}
+                onChange={(v) => setRecord((p) => ({ ...p, motivoConsulta: v }))}
+                rows={4}
+              />
+              <div className="mt-4">
+                <TextArea
+                  label="Padecimiento actual / Historia"
+                  value={record.historia}
+                  onChange={(v) => setRecord((p) => ({ ...p, historia: v }))}
+                  rows={8}
+                />
+              </div>
+            </SectionCard>
+          )}
+
+          {tab === "exploracion" && (
+            <SectionCard
+              title="Exploración física"
+              subtitle="Neurología + Reumatología (plantillas opcionales)"
+            >
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <TextArea
+                  label="Exploración Neurológica (EN)"
+                  value={record.exploracionNeurologica.EN}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      exploracionNeurologica: { ...p.exploracionNeurologica, EN: v },
+                    }))
+                  }
+                  rows={14}
+                />
+                <TextArea
+                  label="Plan Neurología (texto)"
+                  value={record.exploracionNeurologica.plan}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      exploracionNeurologica: { ...p.exploracionNeurologica, plan: v },
+                    }))
+                  }
+                  rows={14}
+                />
+              </div>
+
+              <div className="mt-4">
+                <TextArea
+                  label="Exploración Reumatología (texto base)"
+                  value={record.exploracionReumatologica.textoBase}
+                  onChange={(v) =>
+                    setRecord((p) => ({
+                      ...p,
+                      exploracionReumatologica: {
+                        ...p.exploracionReumatologica,
+                        textoBase: v,
+                      },
+                    }))
+                  }
+                  rows={16}
+                />
+              </div>
+            </SectionCard>
+          )}
+
+          {tab === "paraclinicos" && (
+            <SectionCard title="Paraclínicos" subtitle="Laboratorios, imagen, etc.">
+              <TextArea
+                label="Paraclínicos"
+                value={record.paraclinicos}
+                onChange={(v) => setRecord((p) => ({ ...p, paraclinicos: v }))}
+                rows={10}
+              />
+            </SectionCard>
+          )}
+
+          {tab === "diagnostico" && (
+            <SectionCard title="Diagnóstico" subtitle="Diagnóstico clínico / diferencial">
+              <TextArea
+                label="Diagnóstico"
+                value={record.diagnostico}
+                onChange={(v) => setRecord((p) => ({ ...p, diagnostico: v }))}
+                rows={10}
+              />
+            </SectionCard>
+          )}
+
+          {tab === "plan" && (
+            <SectionCard title="Plan / Tratamiento" subtitle="Indicaciones y seguimiento">
+              <TextArea
+                label="Plan / Tx"
+                value={record.planTx}
+                onChange={(v) => setRecord((p) => ({ ...p, planTx: v }))}
+                rows={12}
+              />
+            </SectionCard>
+          )}
+
+          {tab === "preview" && (
+            <SectionCard title="Vista previa" subtitle="Así se verá el PDF">
+              <div className="rounded-2xl border overflow-hidden" style={{ borderColor: colors.border }}>
+                <div className="h-[80vh] w-full bg-white">
+                  <PDFViewer width="100%" height="100%">
+                    <NotePdf data={record} />
+                  </PDFViewer>
+                </div>
+              </div>
+              <div className="mt-3 text-sm text-slate-600">
+                Si un campo está vacío, el PDF lo oculta (bloques) o usa “—” en la tabla.
+              </div>
+            </SectionCard>
+          )}
+        </main>
       </div>
     </div>
-    <div class="hero__media">
-      <img src="assets/logo-bear.png" alt="Logo ÉDITION PRIVÉE"> <!-- 👉 también puedes mostrar una foto hero -->
-    </div>
-  </div>
-</section>
-
-<!-- COLECCIÓN -->
-<section id="coleccion" class="section">
-  <div class="container">
-    <h2 class="title">Colección Destacada</h2>
-    <p class="lead">Todos los modelos a <strong>$3,900 MXN</strong>. Pide tu talla por WhatsApp.</p>
-    <div class="under"></div>
-
-    <div class="grid cols-3">
-      <!-- 👉 Duplica un <article> para agregar más productos. Solo cambia imagen, título y enlace WA. -->
-
-      <article class="card">
-        <div class="card__media">
-          <img src="assets/sweater-golf-navy.jpg" alt="Polo Bear Golf Navy">
-          <span class="badge">Holiday</span>
-        </div>
-        <div class="card__body">
-          <h3 class="card__title">Polo Bear Golf — Navy</h3>
-          <p class="muted">Algodón premium · Corte unisex</p>
-          <div style="display:flex; align-items:center; justify-content:space-between">
-            <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Polo%20Bear%20Golf%20Navy%20($3900)%20talla%20M.">Comprar</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card__media">
-          <img src="assets/sweater-aviator-olive.jpg" alt="Aviator Olive">
-          <span class="badge">Stock limitado</span>
-        </div>
-        <div class="card__body">
-          <h3 class="card__title">Aviator — Olive</h3>
-          <p class="muted">Tejido grueso · Vibe aviador</p>
-          <div style="display:flex; align-items:center; justify-content:space-between">
-            <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Aviator%20Olive%20($3900)%20talla%20M.">Comprar</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card__media">
-          <img src="assets/sweater-pink-lady.jpg" alt="Pink Lady Ivory">
-          <span class="badge">Favorito</span>
-        </div>
-        <div class="card__body">
-          <h3 class="card__title">Pink Lady — Ivory</h3>
-          <p class="muted">Pastel suave · Detalle bordado</p>
-          <div style="display:flex; align-items:center; justify-content:space-between">
-            <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Pink%20Lady%20Ivory%20($3900)%20talla%20M.">Comprar</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card__media">
-          <img src="assets/sweater-charro.jpg" alt="Charro Fringe">
-          <span class="badge">Edición MX</span>
-        </div>
-        <div class="card__body">
-          <h3 class="card__title">Charro Fringe — Cream</h3>
-          <p class="muted">Flecos y sombrero · Cream</p>
-          <div style="display:flex; align-items:center; justify-content:space-between">
-            <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Charro%20Fringe%20Cream%20($3900)%20talla%20M.">Comprar</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card__media">
-          <img src="assets/sweater-nurse-blue.jpg" alt="Nurse Baby Blue">
-          <span class="badge">Winter Soft</span>
-        </div>
-        <div class="card__body">
-          <h3 class="card__title">Nurse — Baby Blue</h3>
-          <p class="muted">Suavidad · Azul cielo</p>
-          <div style="display:flex; align-items:center; justify-content:space-between">
-            <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Nurse%20Baby%20Blue%20($3900)%20talla%20M.">Comprar</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card__media">
-          <img src="assets/sweater-parisian.jpg" alt="Parisian Noir">
-          <span class="badge">New</span>
-        </div>
-        <div class="card__body">
-          <h3 class="card__title">Parisian — Noir</h3>
-          <p class="muted">Rayas elegantes · City vibe</p>
-          <div style="display:flex; align-items:center; justify-content:space-between">
-            <div class="price">$3,900 MXN</div>
-            <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20Parisian%20Noir%20($3900)%20talla%20M.">Comprar</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- INNOVACIÓN / ENVÍO Y PAGO -->
-<section id="innovacion" class="section alt">
-  <div class="container">
-    <h2 class="title">Envío y Pago</h2>
-    <div class="under"></div>
-    <p class="lead">WhatsApp directo, pago seguro y entrega premium en Santa Fe y zonas cercanas.</p>
-  </div>
-</section>
-
-<!-- EDICIONES LIMITADAS -->
-<section id="limitadas" class="section">
-  <div class="container">
-    <h2 class="title">Ediciones Limitadas</h2>
-    <div class="under"></div>
-    <p class="lead">Series exclusivas. Una vez agotadas, no vuelven.</p>
-
-    <div class="counter" id="counter">
-      <div class="box"><div class="num" id="d">0</div><div class="lbl">DÍAS</div></div>
-      <div class="box"><div class="num" id="h">0</div><div class="lbl">HORAS</div></div>
-      <div class="box"><div class="num" id="m">0</div><div class="lbl">MIN</div></div>
-      <div class="box"><div class="num" id="s">0</div><div class="lbl">SEG</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPRA SIN FRICCIÓN -->
-<section id="compra" class="section alt">
-  <div class="container two">
-    <div>
-      <h2 class="title">Compra Sin Fricción</h2>
-      <div class="under"></div>
-
-      <div class="features">
-        <div class="feature">
-          <div class="dot wapp">🟢</div>
-          <div>
-            <h4 style="margin:0 0 4px">WhatsApp Directo</h4>
-            <p class="muted" style="margin:0">Compra rápida y personalizada</p>
-          </div>
-        </div>
-        <a class="btn" href="https://wa.me/525541266798?text=Hola,%20quiero%20comprar%20Polo%20Bear%20Sweaters" style="width:100%; text-align:center">Comprar por WhatsApp</a>
-
-        <div class="feature">
-          <div class="dot pay">💳</div>
-          <div>
-            <h4 style="margin:0 0 4px">Pago Seguro</h4>
-            <p class="muted" style="margin:0">Transferencia o tarjeta. Recibos digitales.</p>
-          </div>
-        </div>
-
-        <div class="feature">
-          <div class="dot ship">🚚</div>
-          <div>
-            <h4 style="margin:0 0 4px">Envío Premium</h4>
-            <p class="muted" style="margin:0">Mismo día en Santa Fe.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Form → WhatsApp -->
-    <form class="form" onsubmit="return sendLead(event)">
-      <h3>Solicitar Información</h3>
-      <div style="display:grid; gap:12px; margin-top:10px">
-        <input class="input" id="name" placeholder="Nombre completo" required />
-        <input class="input" id="phone" placeholder="Teléfono" />
-        <select class="select" id="product">
-          <option value="">Seleccionar producto</option>
-          <option>Polo Bear Golf — Navy</option>
-          <option>Aviator — Olive</option>
-          <option>Pink Lady — Ivory</option>
-          <option>Charro Fringe — Cream</option>
-          <option>Nurse — Baby Blue</option>
-          <option>Parisian — Noir</option>
-        </select>
-        <textarea class="textarea" id="msg" maxlength="500" placeholder="Cuéntanos tu talla y preferencia de entrega..."></textarea>
-        <button class="btn" type="submit">Enviar Solicitud</button>
-      </div>
-    </form>
-  </div>
-</section>
-
-<!-- TESTIMONIOS -->
-<section id="testimonios" class="section">
-  <div class="container">
-    <h2 class="title">Lo Que Dicen Nuestros Clientes</h2>
-    <div class="under"></div>
-    <p class="lead">Profesionales de élite que aman ÉDITION PRIVÉE.</p>
-
-    <div class="t-grid" style="margin-top:22px">
-      <div class="t">
-        <div class="row" style="display:flex; gap:12px; align-items:center; margin-bottom:10px">
-          <img class="avatar" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=300&auto=format&fit=crop" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,.12)" alt="">
-          <div><strong>Carlos Mendoza</strong><div class="muted">Director de Tecnología</div></div>
-        </div>
-        <div style="color:#ffb400">★★★★★</div>
-        <p>"Calidad excepcional y atención inmediata por WhatsApp."</p>
-      </div>
-
-      <div class="t">
-        <div class="row" style="display:flex; gap:12px; align-items:center; margin-bottom:10px">
-          <img class="avatar" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=300&auto=format&fit=crop" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,.12)" alt="">
-          <div><strong>Ana Sofía Rivera</strong><div class="muted">Consultora</div></div>
-        </div>
-        <div style="color:#ffb400">★★★★★</div>
-        <p>"Sin fricción. Pagué y recibí el mismo día en Santa Fe."</p>
-      </div>
-
-      <div class="t">
-        <div class="row" style="display:flex; gap:12px; align-items:center; margin-bottom:10px">
-          <img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,.12)" alt="">
-          <div><strong>Miguel Ángel Torres</strong><div class="muted">Arquitecto</div></div>
-        </div>
-        <div style="color:#ffb400">★★★★★</div>
-        <p>"Me encantó el acabado del tejido. Repetiré compra."</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container footer__inner">
-    <div>© <span id="year"></span> <span id="brandFoot">ÉDITION PRIVÉE</span> · CDMX</div>
-    <div><a href="https://wa.me/525541266798" style="text-decoration:none; color:var(--brand)">WhatsApp: 55 4126 6798</a></div>
-  </div>
-</footer>
-
-<!-- FLOAT CHAT -->
-<div class="float">
-  <a href="https://wa.me/525541266798?text=Hola,%20quiero%20comprar%20Polo%20Bear%20Sweaters">
-    💬 <span>Comprar por WhatsApp</span> <span class="pill">Online</span>
-  </a>
-</div>
-
-<div id="toast" class="toast">Añadido al carrito</div>
-
-<script>
-  // Año dinámico
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Toast util
-  const toastEl = document.getElementById('toast');
-  function toast(msg){
-    toastEl.textContent = msg;
-    toastEl.style.display='block';
-    clearTimeout(window.__t); window.__t = setTimeout(()=> toastEl.style.display='none', 1600);
-  }
-  function addToCart(name){ toast(`${name} añadido al carrito`) }
-
-  // Form → WhatsApp
-  function sendLead(e){
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const product = document.getElementById('product').value;
-    const msg = document.getElementById('msg').value.trim();
-    const text = encodeURIComponent(
-      `Hola, soy ${name}.` +
-      (phone?` Tel: ${phone}.`:'') +
-      (product?` Producto de interés: ${product}.`:'') +
-      (msg?` Mensaje: ${msg}`:'')
-    );
-    window.open(`https://wa.me/525541266798?text=${text}`, '_blank');
-    toast('Solicitud enviada por WhatsApp');
-    return false;
-  }
-
-  // Countdown a 7 días
-  const target = new Date(Date.now() + 7*24*60*60*1000);
-  function tick(){
-    const now = new Date();
-    let s = Math.max(0, Math.floor((target-now)/1000));
-    const d = Math.floor(s/86400); s-=d*86400;
-    const h = Math.floor(s/3600); s-=h*3600;
-    const m = Math.floor(s/60); s-=m*60;
-    document.getElementById('d').textContent = d.toString();
-    document.getElementById('h').textContent = h.toString().padStart(2,'0');
-    document.getElementById('m').textContent = m.toString().padStart(2,'0');
-    document.getElementById('s').textContent = s.toString().padStart(2,'0');
-    requestAnimationFrame(()=>setTimeout(tick, 1000));
-  }
-  tick();
-</script>
-</body>
-</html>
+  );
+}
